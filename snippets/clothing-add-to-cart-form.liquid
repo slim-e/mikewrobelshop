@@ -30,20 +30,12 @@
     class="product-drawer-summary-form-select clothing-colors-select-btn"
     autocomplete="off">
     {% for color in all_colors %}
-      {% unless product.type == 'Man Sweatshirt' and color == 'Light Pink' %}
-        <option
-          value="{{ color | handleize }}"
-          {% if forloop.index == 1 %} selected{% endif %}>
-          {{ color }}
-        </option>
-      {% endunless %}
-    {% endfor %}
-
-    {% if product.type == 'Woman Long Sleeve' %}
-      <option disabled>
-        charity pink (out of stock)
+      <option
+        value="{{ color | handleize }}"
+        {% if forloop.index == 1 %} selected{% endif %}>
+        {{ color }}
       </option>
-    {% endif %}
+    {% endfor %}
   </select>
 
   <select

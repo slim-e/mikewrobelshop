@@ -50,42 +50,6 @@
     </div>
   </a>
 
-  {% comment %}
-    <div style="display: none;">
-      <ul class="tshirt-thumbs-ul">
-        {% for image in product_images %}
-          {% if product_images.size > 5 %}
-            {% unless forloop.index == 1 or forloop.index >= 7 %}
-              <li>
-                <img data-index="{{ forloop.index }}"
-                  class="woman-longsleeve-preview-image-thumb lazy"
-                  src="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}"
-                  data-original="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}" />
-              </li>
-            {% endunless %}
-          {% else %}
-            {% unless forloop.index >= 7 %}
-              <li>
-                <img data-index="{{ forloop.index }}"
-                  class="woman-longsleeve-preview-image-thumb lazy"
-                  src="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}"
-                  data-original="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}" />
-              </li>
-            {% endunless %}
-          {% endif %}
-        {% endfor %}
-      </ul>
-
-      <select class="product-variants-select">
-        {% for variant in product.variants %}
-          <option
-            data-variant="{{ variant.id }}"
-            data-options="{{ variant.option1 | handleize }}_{{ variant.option2 | handleize }}"></option>
-        {% endfor %}
-      </select>
-    </div>
-  {% endcomment %}
-
   <p class="collection-grid-item-product-price hide-on-med-and-up white">
     {{ product.price | money }}
   </p>
