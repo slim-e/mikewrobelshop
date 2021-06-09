@@ -1,4 +1,11 @@
-development:
+# theme get --list --password=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 --store=moshikunshop.myshopify.com
+
+production:
   password: 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
   theme_id: "77928900"
+  store: moshikunshop.myshopify.com
+
+development:
+  password: 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
+  theme_id: "120279990346"
   store: moshikunshop.myshopify.com
