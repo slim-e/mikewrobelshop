@@ -12,27 +12,6 @@
   </svg>
 </a>
 
-{% comment %}
-{% if template contains 'collection' and collection.handle %}
-  {% if collection.url %}
-    <a href="{{ collection.url }}"
-       class="mobile-nav-btn menu-button-collapse hide-on-med-and-up">
-      <svg viewBox="0 0 29 29">
-        <path d="M26.025 14.496l-14.286-.001 6.366-6.366L15.979 6 5.975 16.003 15.971 26l2.129-2.129-6.367-6.366h14.29z"></path>
-      </svg>
-	</a>
-  {% endif %}
-{% else %}
-  <a href="#"
-     data-activates="mobile-menu"
-     class="mobile-nav-btn menu-button-collapse hide-on-med-and-up">
-    <svg viewBox="0 0 24 24">
-      <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
-    </svg>
-  </a>
-{% endif %}
-{% endcomment %}
-
 <a
   id="cart-mobile-button-collapse"
   href="#"

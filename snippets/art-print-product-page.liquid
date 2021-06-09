@@ -5,28 +5,6 @@
   {% assign product_main_image = product_images.first %}
 {% endif %}
 
-{% comment %}
-<style>
-div#breadcrumbProductArtPrintPage nav a {
-  color: #444444;
-}
-
-div#breadcrumbProductArtPrintPage nav.breadcrumb:before {
-  /* content: none; */
-}
-
-div#breadcrumbProductArtPrintPage nav a:hover {
-  text-decoration: underline;
-}
-</style>
-
-<div id="breadcrumbProductArtPrintPage" class="row hide-on-med-and-down">
-  <div class="col s12 left" style="padding: 0;">
-    {% include 'breadcrumbs' %}
-  </div>
-</div>
-{% endcomment %}
-
 <div class="row collection-header product-page-art-print">
   <div class="col s12 m7 l7 product-page-art-print-images-container">
     <img style="{% if product.type == 'Goodies' or product.type == 'Moshi Kun Cards' or product.tags contains 'kylo ren' or product.tags contains 'Iconic Toys' or product.tags contains 'vertigo' or product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}padding: 0; border: none;{% endif %}"
