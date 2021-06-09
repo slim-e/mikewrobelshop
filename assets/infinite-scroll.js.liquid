@@ -1,0 +1,149 @@
+jQuery(function($) {
+  $('.jiggly-split:not(row)').on('columnflow', function(){
+    // Old columns : columns before event is triggered
+    var $oldColumns = $(this).children('.column');
+
+    // Products sorted by loop-index asc
+    var $products = $(this).find('.product-block-container')
+      .sort(function(a,b) {
+      return $(a).data('loop-index') - $(b).data('loop-index');
+    });
+
+    var newColumnsNumber = 3;
+
+    // Override with media query CSS
+    if($(this).css('min-height') == '1px') {
+      newColumnsNumber = 0;
+    }
+
+    if(newColumnsNumber != $(this).data('prevColCount')) {
+      if(newColumnsNumber === 0) {
+        $(this).append($products);
+      } else {
+        // Create each column
+        var newColumns = [];
+        for(var i = 0; i < newColumnsNumber; i++) {
+          columnDiv = $('<div class="column"/>')
+            .addClass('col s6 m4 l4 col-' + (i+1))
+            .appendTo(this);
+          newColumns.push(columnDiv);
+        }
+
+        // Fill them up based on height of each col
+        $products.each(function(){
+          // Get shortest
+          var $shortestColumn = $(newColumns[0]);
+          var shortestColumnHeight = $shortestColumn.height();
+
+          for(var j = 1; j < newColumns.length; j++) {
+            var currentColumnHeight = $(newColumns[j]).height();
+            if(currentColumnHeight < shortestColumnHeight) {
+              $shortestColumn = $(newColumns[j]);
+              shortestColumnHeight = currentColumnHeight;
+            }
+          }
+          $shortestColumn.append(this);
+        });
+      }
+
+      // Remove old columns
+      $oldColumns.remove();
+      // 3 on desktop and 2 on mobile
+      $(this).data('prevColCount', newColumnsNumber);
+    }
+
+    setTimeout(function(){
+      $('.jiggly-split').css({
+        'opacity': '1',
+        'visibility': 'visible'
+      });
+    },3000);
+  })
+  .on('forcecolumnflow', function() {
+    $(this).removeData('prevColCount').trigger('columnflow');
+  })
+  .trigger('columnflow').imagesLoaded()
+    .done(function() {
+      // http://imagesloaded.desandro.com/
+      // You only get a proper layout after the images have loaded
+      $('.jiggly-split').trigger('forcecolumnflow');
+    });
+
+  /// Pagination-replacement
+  $('.pagination.infiniscroll').each(function() {
+    var $pager = $('<div class="col s12 center pager-button"><a href="#"></a></div>');
+
+    $(this).replaceWith($pager);
+    $pager.find('a').attr('href', $(this).find('.next a').attr('href'));
+
+    $pager.on('click', 'a', function(e) {
+      // Nothing to load anymore
+      if($(this).hasClass('loading')) { return false; }
+
+      $(this).addClass('loading').children().css('visibility', 'hidden');
+
+      // Load the next page
+      var $link = $(this);
+
+      $.get($(this).attr('href'), function(data) {
+        var $data = $($.parseHTML(data));
+
+        // Grab products & insert into page
+        var indexOffset = $('.product-list .product-block-container').length;
+        var $newProducts = $data
+          .find('.product-list .product-block-container, .product-list .er')
+          .hide()
+          .appendTo('.product-list')
+          .filter('.product-block-container')
+          .each(function(index) {
+          $(this).removeAttr('data-loop-index')
+            .data('loop-index', indexOffset + index);
+        });
+
+        // Sort by offset from the top
+        $newProducts.imagesLoaded()
+          .done(function(instance) {
+            // Fix height
+            $('.product-list').height($('.product-list').height());
+
+            // Prep entry transitions
+            $newProducts.addClass('pre-trans-hidden').css('display', '');
+            $newProducts.siblings('.er').css('display', '');
+
+            // Put everything in new column layout
+            $('.jiggly-split').trigger('forcecolumnflow');
+
+            // Find total height to slide to
+            var newHeight = 0;
+            $('.product-list').children().each(function() {
+              var h = $(this).position().top + $(this).height();
+              if (h > newHeight) newHeight = h;
+            });
+
+            $('.yes-more').find('img').attr("src", "{{ 'mike_wrobel_moshikun_gif.gif' | file_url }}");
+
+            $('.product-list').animate({ height: newHeight }, 1000, function() {
+              $(this).css('height', '');
+
+              var $next = $data.find('.pagination .next a');
+              if($next.length !== 0) {
+                // there are more products to load
+                $link.attr('href', $next.attr('href'))
+                  .removeClass('loading')
+                  .children()
+                  .css('visibility', '');
+              }
+            });
+          });
+      });
+
+      return false;
+    });
+
+    $(window).on('scroll', function() {
+      if($(window).scrollTop() + $(window).height() > $pager.offset().top) {
+        $pager.find('a').trigger('click');
+      }
+    });
+  });
+});

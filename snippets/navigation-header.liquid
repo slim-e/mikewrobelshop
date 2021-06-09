@@ -1,0 +1,125 @@
+<div class="navbar-fixed desktop-header">
+  <nav class="desktop-header-nav">
+    <div class="nav-wrapper container">
+      {% include "mobile-navigation" %}
+
+      {%- comment %}
+      <a class="hide-on-med-and-up" href="https://mikewrobel.shop/collections/mike-wrobel-art-prints" rel="next" class="mobile-nav-header-logo-button">
+        <img
+          class="brand-logo center lazy mobile-nav-header-logo"
+          src="{{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: '80x', scale: 3 | split: '?' | first }}"
+          srcset="{{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: '80x', scale: 3 | split: '?' | first }} 100w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 200w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 400w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+          alt="Mike Wrobel Shop Mobile Logo"
+          data-srcset="{{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: '80x', scale: 3 | split: '?' | first }} 100w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 200w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 400w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ 'mobile-nav-mike-wrobel-logo.gif' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+          data-sizes="25vw" />
+      </a>
+      {% endcomment -%}
+
+      <div class="hide-on-small-only hide-on-large-only left">
+        <a data-activates="tablet-menu" class="menu-button-collapse tablet-menu-trigger">
+          <svg viewBox="0 0 24 24">
+            <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="hide-on-small-only brand-logo right top-special-link">
+        <a href="#" class="right cart-button-collapse" data-activates="cart">
+          <img class="left mobile-menu-icon lazy"
+            src="{{ 'mobile-nav-cart.png' | file_img_url: '41x41', scale: 3 | split: '?' | first }}"
+            srcset="{{ 'mobile-nav-cart.png' | file_img_url: '41x41', scale: 3 | split: '?' | first }} 100w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 200w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 400w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+            alt="Mike Wrobel Shop Navigation Cart Logo"
+            data-srcset="{{ 'mobile-nav-cart.png' | file_img_url: '41x41', scale: 3 | split: '?' | first }} 100w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 200w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 400w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ 'mobile-nav-cart.png' | file_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+            sizes="20vw"
+            data-sizes="20vw" >
+        </a>
+
+        <div class="hide-on-small-only"
+          data-cart-render="item_count"></div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<ul id="tablet-menu" class="side-nav hide-on-small-only hide-on-large-only">
+  <li>
+    <a href="/" rel="next" title="Home Page">Home</a>
+  </li>
+  <li>
+    <a href="/collections/mike-wrobel-art-prints" rel="next" title="Art Prints Collection">Art Prints</a>
+  </li>
+
+  <li class="desktop-nav-trigger">
+    <a id="clothing" class='desktop-nav-dropdown' href='#'>
+      Clothing
+      <span class="right desktop-nav-dropdown-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+        </svg>
+      </span>
+    </a>
+  </li>
+  <div class="desktop-nav-panel">
+    <li class="desktop-nav-sub-category">
+      <a href="/collections/mike-wrobel-men-tshirts" rel="next" title="Men Tees Collection">Men Tees</a>
+    </li>
+    <li class="desktop-nav-sub-category">
+      <a href="/collections/mike-wrobel-women-tshirts" rel="next" title="Women Tees Collection">Women Tees</a>
+    </li>
+  </div>
+
+  <li>
+    <a href="/collections/mike-wrobel-goodies" rel="next" title="Goodies Collection">
+      Goodies
+    </a>
+  </li>
+
+  <li>
+    <a href="/collections/mike-wrobel-8090s-game-of-thrones-era-characters" rel="next" title="80s/90s Thrones Collection">
+      80/90s Thrones
+    </a>
+  </li>
+
+  <li>
+    <a href="/collections/mike-wrobel-limited" rel="next" title="Limited Art Prints Collection">
+      Limited
+    </a>
+  </li>
+</ul>
+
+{% if template == 'index' or (template contains 'collection' and collection.handle == "mike-wrobel-featured-products") %}
+  {% assign featured_products = collections['mike-wrobel-featured-products'].products %}
+  {% include "dynamic-product-art-print" %}
+
+  {% for product in featured_products %}
+    {% assign landscape = false %}
+
+    {% case product.type %}
+    {% when 'Art Print' %}
+      {% assign drawer_content = 'product-art-print' %}
+      {% if product.tags contains 'landscape' %}
+        {% assign landscape = true %}
+      {% endif %}
+    {% when 'Man Tshirt' %}
+      {% assign drawer_content = 'product-man-tshirt' %}
+    {% when 'Woman Tshirt' %}
+      {% assign drawer_content = 'product-woman-tshirt' %}
+    {% when 'Man Sweatshirt' %}
+      {% assign drawer_content = 'product-man-sweatshirt' %}
+    {% when 'Woman Long Sleeve' %}
+      {% assign drawer_content = 'product-woman-longsleeve' %}
+    {% when 'Moshi Kun Cards' %}
+      {% assign drawer_content = 'product-moshikun-card' %}
+    {% when 'Goodies' %}
+      {% assign drawer_content = 'product-goodies' %}
+    {% else %}
+      {% assign drawer_content = 'product-art-print' %}
+    {% endcase %}
+
+    {% unless product.type == 'Art Print' and landscape == false %}
+      <ul id="product-drawer-{{ product.id }}" class="side-nav">
+        {% include drawer_content with product %}
+      </ul>
+    {% endunless %}
+  {% endfor %}
+{% endif %}

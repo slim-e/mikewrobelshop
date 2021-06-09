@@ -1,0 +1,65 @@
+{% assign product_images = product.images %}
+{% assign product_main_image = product_images[2] %}
+{% assign thumbs_count = 5 %}
+
+<div class="row collection-header product-page-art-print">
+  <div class="col s12 m6 l7 product-page-art-print-images-container">
+    <div class="row">
+      <div class="col s12 product-drawer-image tshirt-image">
+        <img
+          src="{{ product_main_image | product_img_url: '470x', scale: 3 | split: '?' | first }}"
+          sizes="50vw"
+          srcset="{{ product_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_main_image | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+          alt="{{ product_main_image.alt | escape }}"
+          class="product-page-art-print-images-container-featured-img lazy"
+          data-src="{{ product_main_image | product_img_url: '470x', scale: 3 | split: '?' | first }}"
+          data-srcset="{{ product_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_main_image | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+          data-sizes="50vw" />
+      </div>
+
+      <div class="col s12 tshirt-thumbs">
+        <ul>
+          {% for i in (2..7) %}
+             <li>
+                <img
+                  class="woman-longsleeve-preview-image-thumb lazy"
+                  src="{{ product_images[i] | img_url: '470x', scale: 3 | split: '?' | first }}"
+                  sizes="50vw"
+                  srcset="{{ product_images[i] | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_images[i] | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_images[i] | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+                  alt="{{ product_images[i].alt | escape }}"
+                  data-src="{{ product_images[i] | product_img_url: '270x', scale: 3 | split: '?' | first }}"
+                  data-srcset="{{ product_images[i] | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_images[i] | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_images[i] | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_images[i] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+                  data-sizes="5vw" />
+             </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m6 l5 product-page-art-print-form-container">
+    <h1 class="product-page-art-print-form-container-title center">
+      {{ product.title }}
+    </h1>
+
+    {% if product.variants.first.inventory_quantity > 0 %}
+    	<h5 class="product-page-art-print-form-container-price center">
+      		<strong>{{ product.price | money }}</strong>
+    	</h5>
+    
+	    {% include "add-to-cart-button" with product %}
+	    {% include "product-drawer-add-to-cart-feedbacks" %}
+	    {% include 'product-page-delivery-warning' %}
+    {% else %}
+    	<h5 class="product-page-art-print-form-container-price center">
+      		<strong>Sold Out</strong>
+    	</h5>
+	{% endif %}
+    
+    {% if product.description != '' and product.description != 'Lorem Ipsum' %}
+	    <p class="product-page-art-print-form-container-description">  
+    	    {{ product.description | rstrip }}
+	    </p>
+    {% endif %}
+  </div>
+</div>

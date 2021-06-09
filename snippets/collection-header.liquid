@@ -1,0 +1,42 @@
+<div class="row collection-header">
+  <div class="col s12 m8 l8 collection-header-wrapper">
+    <h1 class="collection-header-wrapper-title hide-on-small-only">
+      {{ collection.title }} Collection
+    </h1>
+  </div>
+
+  {% if collection.handle contains '8090s-' %}
+    <div id="thrones-products" class="col s12 m4 l4 center">
+      <ul class="center thrones-list">
+        <li class="thrones-trigger thrones-list-item">
+          <a id="got" class='thrones-dropdown' href='#'>
+            -- Choose a Product --
+            <span class="right thrones-dropdown-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+              </svg>
+            </span>
+          </a>
+        </li>
+
+        <div class="thrones-panel">
+          <li class="thrones-list-item">
+            <a rel="next" title="80S/90s Game Of Thrones Art Prints Collection" href="/collections/mike-wrobel-8090s-game-of-thrones-era-characters">
+              Art Prints
+            </a>
+          </li>
+          <li class="thrones-list-item">
+            <a rel="next" title="80S/90s Game Of Thrones Men Tees Collection" href="/collections/8090s-thrones-men-tshirts">
+              Men Tees
+            </a>
+          </li>
+          <li class="thrones-list-item">
+            <a rel="next" title="80S/90s Game Of Thrones Women Tees Collection" href="/collections/8090s-thrones-women-tshirts">
+              Women Tees
+            </a>
+          </li>
+        </div>
+      </ul>
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,43 @@
+<div class="goodies product-drawer-container container">
+  <div class="row">
+    <div class="col s12 product-drawer-image goodies-image">
+      <img class="lazy"
+        src="{{ product.images.last | img_url: '100x', scale: 3 | split: '?' | first }}"
+        sizes="30vw"
+        srcset="{{ product.images.last | img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product.images.last | img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product.images.last | img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+        data-src="{{ product.images.last | img_url: '270x', scale: 3 | split: '?' | first }}"
+        data-srcset="{{ product.images.last | img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product.images.last | img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product.images.last | img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product.images.last | img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+        data-sizes="30vw"
+        alt="{{ product.images.last.alt | escape }}" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 center product-drawer-summary">
+      <div class="product-drawer-summary-header">
+        <p class="product-drawer-summary-header-name">{{ product.title }}</p>
+        <p class="product-drawer-summary-header-price">
+          {{ product.first_available_variant.price | money }}
+
+          {% if product.first_available_variant.compare_at_price > product.first_available_variant.price %}
+            <span class="product-drawer-summary-header-on-sale"></span>
+          {% endif %}
+        </p>
+      </div>
+
+      {% include "add-to-cart-button" with product %}
+
+      {% include "product-drawer-add-to-cart-feedbacks" %}
+
+      <div class="product-drawer-summary-description">
+        Please allow 2~6 weeks for delivery depending on your country
+      </div>
+
+      <a
+        id="product-drawer-close-{{ product.id }}"
+        class="mobile-cart-close hide-on-med-and-up">
+        {% include 'mobile-close-button-icon' %}
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+
+{% if template contains 'product' %}  
+	{% assign ampify_show_products_with_tags_enabled = false %}
+	{% assign ampify_show_products_with_tags = '' | split: ',' %}
+	{% assign ampify_hide_products_with_tags = '' | split: ',' %}
+	
+	{% if ampify_show_products_with_tags_enabled %}
+		
+		{% assign show_page = false %}
+
+		{% for tag in product.tags %}	
+			{% if ampify_show_products_with_tags contains tag %}
+				{% assign show_page = true %}
+			{% endif %}
+		{% endfor %}
+	
+	{% else %}
+
+		{% assign show_page = true %}
+
+		{% for tag in product.tags %}	
+			{% if ampify_hide_products_with_tags contains tag %}
+				{% assign show_page = false %}
+			{% endif %}
+		{% endfor %}
+
+	{% endif %}
+
+	{% if show_page %}  
+		{% assign amp_path = 'products/' | append: product.handle %}
+	{% endif %}
+{% endif %}
+{% if amp_path %}    
+<link rel="amphtml" href="{{ 'https://mikewrobel.shop/a/amp/' | append: amp_path  }}">
+{% endif %}

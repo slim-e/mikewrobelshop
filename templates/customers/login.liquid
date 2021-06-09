@@ -1,0 +1,152 @@
+<div class="row">
+  {% include "error-404" %}
+</div>
+
+{% comment %}
+<div class="note form-success row " id="resetSuccess" style="display:none;">
+  <p class="col s12 center">
+    {{ 'customer.recover_password.success' | t }}
+  </p>
+</div>
+
+<div id="login" class="col s12 m6 l6 form-container">
+  <p class="title">sign in</p>
+  <p class="desc">For returning customers.</p>
+
+
+  {% form 'customer_login' %}
+
+    <div class="row error row">
+      <div class="col s12">
+        {{ form.errors | default_errors }}
+      </div>
+    </div>
+
+    <label for="customer_email">{{ 'customer.login.email' | t }}</label>
+    <input type="email" name="customer[email]" id="customer_email"
+      placeholder="{{ 'customer.login.email' | t }}"
+      {% if form.errors contains "email" %} class="error"{% endif %}
+      autocorrect="off" autocapitalize="off" autofocus>
+
+
+    <label for="customer_password">{{ 'customer.login.password' | t }}</label>
+    <input type="password" value="" name="customer[password]"
+      id="customer_password" placeholder="{{ 'customer.login.password' | t }}"
+      {% if form.errors contains "password" %} class="error"{% endif %}>
+
+    <div class="submit-container">
+      <input type="submit" class="btn" value="{{ 'customer.login.sign_in' | t }}">
+    </div>
+
+    <p class="forgot-password">
+      <a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+    </p>
+
+  {% endform %}
+</div>
+
+<div id="recover_password" style="display: none;" class="col s12 m6 l6 form-container">
+  <h4 class="title">{{ 'customer.recover_password.title' | t }}</h4>
+  <p class="desc">{{ 'customer.recover_password.subtext' | t }}</p>
+
+  {% form 'recover_customer_password' %}
+
+    {{ form.errors | default_errors }}
+
+    {% if form.posted_successfully? %}
+      {% assign reset_success = true %}
+    {% endif %}
+
+    <label for="recover-email">{{ 'customer.recover_password.email' | t }}</label>
+    <input type="email" value="" name="email" id="recover-email"
+      placeholder="{{ 'customer.recover_password.email' | t }}" autocorrect="off"
+      autocapitalize="off">
+
+    <div class="center submit-container">
+      <p>
+        <input type="submit" class="btn" value="{{ 'customer.recover_password.submit' | t }}">
+      </p>
+      <a class="forgot-cancel" href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a>
+    </div>
+  {% endform %}
+</div>
+
+<div id="register" class="col s12 m6 l6 form-container">
+  <p class="title">sign up</p>
+  <p class="desc">Create an account to expedite future checkouts, <br>receive emails, discounts and special offers.</p>
+
+  {% form 'create_customer' %}
+
+    {{ form.errors | default_errors }}
+
+    <label for="first_name">{{ 'customer.register.first_name' | t }}</label>
+    <input type="text" name="customer[first_name]" id="first_name"
+      placeholder="{{ 'customer.register.first_name' | t }}"
+      {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+      autocapitalize="words" autofocus>
+
+    <label for="last_name">{{ 'customer.register.last_name' | t }}</label>
+    <input type="text" name="customer[last_name]" id="last_name"
+      placeholder="{{ 'customer.register.last_name' | t }}"
+      {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+
+    <label for="email">{{ 'customer.register.email' | t }}</label>
+    <input type="email" name="customer[email]" id="email"
+      placeholder="{{ 'customer.register.email' | t }}" {% if form.errors contains "email" %}
+      class="error"{% elsif form.email %} value="{{ form.email }}"{% endif %}
+      autocorrect="off" autocapitalize="off">
+
+    <label for="password">{{ 'customer.register.password' | t }}</label>
+    <input type="password" name="customer[password]" id="create_password"
+      placeholder="{{ 'customer.register.password' | t }}" {% if form.errors contains "password" %}
+      class="error"{% endif %}>
+
+    <label for="phone">{{ 'customer.addresses.phone' | t }}</label>
+    <input type="tel" id="address_phone_new" name="address[phone]" value="{{form.phone}}" placeholder="5551234567">
+
+    <table class="newsletter-signup">
+      <tbody>
+        <tr>
+          <td>
+            <input id="emailsubCheck" type="checkbox" value="true" name="subscriptionEnabled" placeholder="" style="width: auto; margin: -2px 0px 0px;">
+            <input type="hidden" value=" " name="_D:subscriptionEnabled">
+          </td>
+          <td>
+            <label>Let me know when you finish a new design !</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="submit-container">
+      <input class="col s12" type="submit" value="{{ 'customer.register.submit' | t }}">
+    </div>
+
+  {% endform %}
+</div>
+
+
+<script>
+
+  /*
+    Show/hide the recover password form when requested.
+  */
+  function showRecoverPasswordForm() {
+    $('#recover_password').show();
+    $('#login').hide();
+  }
+
+  function hideRecoverPasswordForm() {
+    $('#login').show();
+    $('#recover_password').hide();
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+    document.getElementById('resetSuccess').style.display = 'block';
+  {% endif %}
+</script>
+{% endcomment %}

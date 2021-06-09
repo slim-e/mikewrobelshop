@@ -1,0 +1,65 @@
+{% capture option_titles %}Color,Size{% endcapture %}
+{% assign option_titles = option_titles | split:',' %}
+{% for option in product.options %}
+  {% if option == 'Size' %}
+    {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+    {% assign all_sizes = product.variants | map: option_index | uniq %}
+{% endif %}
+{% if option == 'Color' %}
+    {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+    {% assign all_colors = product.variants | map: option_index | uniq %}
+  {% endif %}
+{% endfor %}
+
+<form class="product-drawer-summary-form center">
+  <select
+    id="sizesList-{{ product.id }}"
+    class="product-drawer-summary-form-select clothing-sizes-select-btn"
+    autocomplete="off">
+    {% for size in all_sizes %}
+      <option
+        value="{{ size | handleize }}"
+        {% if forloop.index == 1 %} selected{% endif %}>
+        {{ size }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <select
+    id="colorsList-{{ product.id }}"
+    class="product-drawer-summary-form-select clothing-colors-select-btn"
+    autocomplete="off">
+    {% for color in all_colors %}
+      {% unless product.type == 'Man Sweatshirt' and color == 'Light Pink' %}
+        <option
+          value="{{ color | handleize }}"
+          {% if forloop.index == 1 %} selected{% endif %}>
+          {{ color }}
+        </option>
+      {% endunless %}
+    {% endfor %}
+
+    {% if product.type == 'Woman Long Sleeve' %}
+      <option disabled>
+        charity pink (out of stock)
+      </option>
+    {% endif %}
+  </select>
+
+  <select
+    id="variantsList-{{ product.id }}"
+    style="display: none !important;"
+    class="product-variants-select">
+    {% for variant in product.variants %}
+      <option
+        data-variant="{{ variant.id }}"
+        data-options="{{ variant.option1 | handleize }}_{{ variant.option2 | handleize }}"></option>
+    {% endfor %}
+  </select>
+
+  {% include "add-to-cart-button" with product %}
+
+  {% include "product-drawer-add-to-cart-feedbacks" %}
+
+  {% include 'product-page-delivery-warning' %}
+</form>

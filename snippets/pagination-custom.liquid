@@ -1,0 +1,79 @@
+{% comment %}
+
+  This snippet renders a custom widget based on the current 'paginate' context,
+  defined in { % paginate XXXX by 5 % } tags wrapping the content.
+  The example below breaks the pagination down so you can setup your own styles and behavior if you wish.
+
+  Basic Pagination Usage:
+    <div class="pagination">
+      {{ paginate | default_pagination }}
+    </div>
+
+  Replace Text:
+    <div class="pagination">
+      {{ paginate | default_pagination | replace: 'Previous', 'Newer articles' | replace: 'Next', 'Older articles' }}
+    </div>
+
+  More information:
+   - index#pagination
+   - http://docs.shopify.com/themes/liquid-variables/paginate
+
+{% endcomment %}
+
+<ul class="pagination-custom">
+  {% if paginate.previous %}
+    <li>
+      <a href="{{ paginate.previous.url }}" class="paginate-prev"
+         title="{{ paginate.previous.title }}">
+        <svg viewBox="0 0 24 24">
+          <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+        </svg>
+      </a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <span>
+        <svg viewBox="0 0 24 24">
+          <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+        </svg>
+      </span>
+    </li>
+  {% endif %}
+
+  {% for part in paginate.parts %}
+    {% if part.is_link %}
+      <li>
+        <a href="{{ part.url }}" title="">{{ part.title }}</a>
+      </li>
+    {% else %}
+      {% if part.title == paginate.current_page %}
+        <li class="active">
+          <span>{{ part.title }}</span>
+        </li>
+      {% else %}
+        <li>
+          <span>{{ part.title }}</span>
+        </li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if paginate.next %}
+    <li>
+      <a href="{{ paginate.next.url }}" class="paginate-next"
+         title="{{ paginate.next.title }}">
+        <svg viewBox="0 0 24 24">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+        </svg>
+      </a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <span>
+        <svg viewBox="0 0 24 24">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+        </svg>
+      </span>
+    </li>
+  {% endif %}
+</ul>

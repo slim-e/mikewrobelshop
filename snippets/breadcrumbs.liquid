@@ -1,0 +1,15 @@
+{% comment %} Added by Slim on Nov. 5 2019 {% endcomment %}
+
+{% if template contains 'product' %}
+<nav class="breadcrumb" role="navigation" aria-label="breadcrumbs" style="font-size: 14px;">
+  <a href="/" title="Home">Home</a>
+  
+  {% if collection.url %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {{ collection.title | link_to: collection.url }}
+  {% endif %}
+
+  <span aria-hidden="true">&rsaquo;</span>
+  <span style="color: #767676;">{{ product.title }}</span>
+</nav>
+{% endif %}

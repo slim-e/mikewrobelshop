@@ -1,0 +1,92 @@
+{% assign product_images = product.images | reverse %}
+
+<div
+  class="col s6 m4 l4 product-block-container collection-item-product-{{ product.id }}"
+  data-loop-index="{{ forloop.index }}">
+  {% if product.first_available_variant.compare_at_price > product.first_available_variant.price %}
+    <span class="on-sale">on sale</span>
+  {% endif %}
+
+  {% if product_images.size > 5 %}
+    {% assign drawer_main_image_src = product_images[1] %}
+  {% else %}
+    {% assign drawer_main_image_src = product_images[0] %}
+  {% endif %}
+
+  <a
+    id="collection-item-trigger-{{ product.id }}"
+    href="{{ product.url | within: collection }}"
+    data-activates="product-drawer-{{ product.id }}"
+    class="product-block product-item collection-tshirt-item-trigger collection-tshirt-grid-item"
+    data-image-src="{{ drawer_main_image_src | img_url: '410x', scale: 3 | split: '?' | first }}"
+    data-title="{{ product.title }}"
+    data-product-id="{{ product.id }}"
+    data-price="{{ product.price | money }}"
+    data-gender="{% if product.type == 'Man Tshirt' %}man{% else %}woman{% endif %}"
+    data-thumbs-src="{{ product_images | map: 'src' | join: ', ' }}">
+
+    <div class="reveal">
+      <img
+        src="{{ product_images[4] | product_img_url: '270x', scale: 3 | split: '?' | first }}"
+        sizes="25vw"
+        srcset="{{ product_images[4] | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_images[4] | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_images[4] | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+        alt="{{ product_images[4].alt | escape }}"
+        class="lazy"
+        data-src="{{ product_images[4] | product_img_url: '270x', scale: 3 | split: '?' | first }}"
+        data-srcset="{{ product_images[4] | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_images[4] | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_images[4] | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_images[4] | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+        data-sizes="25vw" />
+
+      <div class="hidden hide-on-med-and-down">
+        <div class="caption">
+          <div class="centered">
+            <p>{{ product.title }}</p>
+            <p>-</p>
+            <p>
+              {{ product.first_available_variant.price | money }} ~ {{ product.variants.last.price | money }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  {% comment %}
+    <div style="display: none;">
+      <ul class="tshirt-thumbs-ul">
+        {% for image in product_images %}
+          {% if product_images.size > 5 %}
+            {% unless forloop.index == 1 or forloop.index >= 7 %}
+              <li>
+                <img data-index="{{ forloop.index }}"
+                  class="woman-longsleeve-preview-image-thumb lazy"
+                  src="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}"
+                  data-original="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}" />
+              </li>
+            {% endunless %}
+          {% else %}
+            {% unless forloop.index >= 7 %}
+              <li>
+                <img data-index="{{ forloop.index }}"
+                  class="woman-longsleeve-preview-image-thumb lazy"
+                  src="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}"
+                  data-original="{{ image | img_url: '410x', scale: 3 | split: '?' | first }}" />
+              </li>
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      <select class="product-variants-select">
+        {% for variant in product.variants %}
+          <option
+            data-variant="{{ variant.id }}"
+            data-options="{{ variant.option1 | handleize }}_{{ variant.option2 | handleize }}"></option>
+        {% endfor %}
+      </select>
+    </div>
+  {% endcomment %}
+
+  <p class="collection-grid-item-product-price hide-on-med-and-up white">
+    {{ product.price | money }}
+  </p>
+</div>

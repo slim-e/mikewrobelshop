@@ -1,0 +1,60 @@
+<meta property="og:site_name" content="{{ shop.name }}">
+
+{% if template contains 'product' %}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{ product.title | strip_html | escape }}">
+  <meta property="og:image" content="http:{{ product.images.last | product_img_url: 'master' | split: '?' | first }}">
+  <meta property="og:image:secure_url" content="https:{{ product.images.last | product_img_url: 'master' | split: '?' | first }}">
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html | escape }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+
+{% elsif template contains 'collection' %}
+  <meta property="og:type" content="collection">
+  <meta property="og:title" content="{{ collection.title | strip_html | escape }}">
+  <meta property="og:image" content="http:{{ collection.image | img_url: 'master' | split: '?' | first }}">
+  <meta property="og:image:secure_url" content="https:{{ collection.image | img_url: 'master' | split: '?' | first }}">
+
+{% elsif template == 'password' or template == 'index' %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ shop.name }}">
+  {% if settings.logo_use_image %}
+  <meta property="og:image" content="http:{{ 'moshikun_home_thumbnail.png' | file_img_url: 'master' | split: '?' | first }}">
+  <meta property="og:image:secure_url" content="https:{{ 'moshikun_home_thumbnail.png' | file_img_url: 'master' | split: '?' | first }}">
+  {% endif %}
+
+{% else %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:image" content="http:{{ 'moshikun_home_thumbnail.png' | file_img_url: 'master' | split: '?' | first }}">
+  <meta property="og:image:secure_url" content="https:{{ 'moshikun_home_thumbnail.png' | file_img_url: 'master' | split: '?' | first }}">
+{% endif %}
+
+{% if page_description %}
+  <meta property="og:description" content="{{ page_description }}">
+{% endif %}
+
+{% if template == 'password' %}
+  <meta property="og:url" content="{{ shop.url }}">
+{% else %}
+  <meta property="og:url" content="{{ canonical_url }}">
+{% endif %}
+
+<meta name="twitter:card" content="summary">
+{% unless settings.social_twitter_link == blank %}
+  <meta name="twitter:site" content="@{{ settings.social_twitter_link | split: 'twitter.com/' | last }}">
+{% endunless %}
+
+{% if template contains 'product' %}
+  <meta name="twitter:title" content="{{ product.title | strip_html | escape }}">
+  <meta name="twitter:description" content="{{ product.description | strip_html | truncatewords: 50, '' | escape }}">
+  <meta name="twitter:image" content="https:{{ product.images.last | img_url: 'master' | split: '?' | first }}">
+  <meta name="twitter:image:width" content="240">
+  <meta name="twitter:image:height" content="240">
+
+{% elsif template contains 'article' %}
+  <meta name="twitter:title" content="{{ article.title | strip_html | escape }}">
+  <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncatewords: 50, '' | escape }}">
+  {% if article.image %}
+    <meta property="twitter:image" content="https:{{ article | img_url: '1024x1024' }}">
+  {% endif %}
+{% endif %}

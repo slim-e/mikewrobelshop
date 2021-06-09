@@ -1,0 +1,120 @@
+{% assign product_images = product.images | reverse %}
+
+<div
+  id="product-{{ product.id }}"
+  class="woman-longsleeve product-drawer-container container">
+  <div class="row">
+    <div class="col s12 product-drawer-image woman-longsleeve-image">
+      <img
+        class="woman-longsleeve-image-preview"
+        src="{{ product_images[0] | img_url: 'master', scale: 3 | split: '?' | first }}"
+        alt="{{ product_images[0].alt | escape }}" />
+    </div>
+
+    <div class="col s12 woman-longsleeve-thumbs">
+      <ul>
+        {% for image in product_images %}
+          {% if forloop.index == 5 %}
+            {% break %}
+          {% else  %}
+            <li>
+              <img
+                class="woman-longsleeve-preview-image-thumb"
+                src="{{ image | img_url: 'master', scale: 3 | split: '?' | first }}"
+                alt="{{ image.alt | escape }}" />
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 center product-drawer-summary">
+      <div class="product-drawer-summary-header">
+        <p class="product-drawer-summary-header-name">{{ product.title }}</p>
+        <p class="product-drawer-summary-header-price">
+          {{ product.first_available_variant.price | money }}
+
+          {% if product.first_available_variant.compare_at_price > product.first_available_variant.price %}
+            <span class="product-drawer-summary-header-on-sale"></span>
+          {% endif %}
+        </p>
+      </div>
+
+      {% include "clothing-add-to-cart-form" with product %}
+
+      <div class="cart-feedbacks">
+        <span class="cart-feedbacks-success">
+          {{ product.title }} has been added to your cart!
+        </span>
+        <span class="cart-feedbacks-error">
+          Oops :( There has been an error, please try to reload the page.
+        </span>
+      </div>
+
+      <div class="product-drawer-summary-description">
+        <p>
+          <strong>Gildan G540L</strong><br>
+          Ladies’ Long-Sleeve T-Shirt
+        </p>
+
+        <p>
+          - 100% preshrunk cotton<br>
+          - double-needle stitching throughout<br>
+          - seamless rib at neck<br>
+          - taped shoulder-to-shoulder<br>
+          - seamless double-needle collar<br>
+          - double-needle sleeve and bottom hem<br>
+          - taped neck<br>
+          - sideseams with slightly tapered Missy fit
+        </p>
+      </div>
+
+      <table class="centered bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>S</th>
+            <th>M</th>
+            <th>L</th>
+            <th>XL</th>
+            <th>2XL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Body Length Back (in)</th>
+            <td>24.5</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+            <td>27.5</td>
+          </tr>
+          <tr>
+            <th>Body Length Front (in)</th>
+            <td>20.5</td>
+            <td>21</td>
+            <td>22</td>
+            <td>23.75</td>
+            <td>23</td>
+          </tr>
+          <tr>
+            <th>Body Width (in)</th>
+            <td>17.25</td>
+            <td>19.25</td>
+            <td>21.25</td>
+            <td>23.25</td>
+            <td>25.25</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <a
+        id="product-drawer-close-{{ product.id }}"
+        class="mobile-cart-close hide-on-med-and-up">
+        {% include 'mobile-close-button-icon' %}
+      </a>
+    </div>
+  </div>
+</div>

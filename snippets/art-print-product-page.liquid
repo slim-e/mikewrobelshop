@@ -1,0 +1,125 @@
+{% assign product_images = product.images | reverse %}
+{% if product.tags contains 'landscape' %}
+  {% assign product_main_image = product_images[1] %}
+{% else %}
+  {% assign product_main_image = product_images.first %}
+{% endif %}
+
+{% comment %}
+<style>
+div#breadcrumbProductArtPrintPage nav a {
+  color: #444444;
+}
+  
+div#breadcrumbProductArtPrintPage nav.breadcrumb:before {
+  /* content: none; */
+}
+
+div#breadcrumbProductArtPrintPage nav a:hover {
+  text-decoration: underline;
+}
+</style>
+
+<div id="breadcrumbProductArtPrintPage" class="row hide-on-med-and-down">
+  <div class="col s12 left" style="padding: 0;">
+    {% include 'breadcrumbs' %}
+  </div>
+</div>
+{% endcomment %}
+
+<div class="row collection-header product-page-art-print">
+  <div class="col s12 m7 l7 product-page-art-print-images-container">
+    <img style="{% if product.type == 'Goodies' or product.type == 'Moshi Kun Cards' or product.tags contains 'kylo ren' or product.tags contains 'Iconic Toys' or product.tags contains 'vertigo' or product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}padding: 0; border: none;{% endif %}"
+      src="{{ product_main_image | product_img_url: '345x', scale: 3 | split: '?' | first }}"
+      sizes="50vw"
+      srcset="{{ product_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_main_image | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+      alt="{{ product_main_image.alt | escape }}"
+      class="product-page-art-print-images-container-featured-img art-print-img lazy"
+      data-src="{{ product_main_image | product_img_url: '270x', scale: 3 | split: '?' | first }}"
+      data-srcset="{{ product_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ product_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ product_main_image | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ product_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+      data-sizes="50vw" />
+
+      <span class="product-drawer-image-warning">
+        * Art Prints are printed without the watermark of course *
+      </span>
+  </div>
+
+  <div class="col s12 m5 l5 product-page-art-print-form-container"  style="margin-bottom: 50px;">
+    <h1 class="product-page-art-print-form-container-title center">
+      {{ product.title }}{% unless product.type == 'Goodies' %}&nbsp;-&nbsp;{{ product.type }}{% endunless %}
+    </h1>
+
+    <h5 class="product-page-art-print-form-container-price center">
+      <strong>
+        {% if product.type == 'Art Print' %}
+          {{ product.variants.first.option2 | remove: 'medium-' | split: 'x' | join: '"x' | append: '"' }} - {{ product.first_available_variant.price | money }}
+          {% if product.variants.size > 1 %}
+            <br>
+            {{ product.variants.last.option2 | remove: 'large-' | split: 'x' | join: '"x' | append: '"' }} - {{ product.variants.last.price | money }}
+          {% endif %}
+        {% elsif product.type == 'Moshi Kun Cards' %}
+          2.9"x2.9" - {{ product.variants.last.price | money }}
+        {% elsif product.type == 'Goodies' or product.type == 'Cap' %}
+          {{ product.variants.last.price | money }}
+        {% endif %}
+      </strong>
+    </h5>
+
+    {% if product.variants.size > 1 %}
+      <form class="product-drawer-summary-form">
+        {% include "add-to-cart-button" with product %}
+
+        {% include "product-drawer-add-to-cart-feedbacks" %}
+      </form>
+    {% else %}
+      {% include "add-to-cart-button" with product %}
+
+      {% include "product-drawer-add-to-cart-feedbacks" %}
+    {% endif %}
+
+    {% include 'product-page-delivery-warning' %}
+
+    <p class="product-page-art-print-form-container-description">
+      <strong>Product Details :</strong><br>
+      {% if product.type == 'Art Print' %}
+        {% assign limited_prints_count = 400 %}
+        {% if product.tags contains 'batman-series' %}
+          {% assign limited_prints_count = 500 %}
+        {% elsif product.tags contains 'vertigo' %}
+          {% assign limited_prints_count = 600 %}
+        {% endif %}
+
+        {% if product.variants.first.option1 contains 'signed' %}
+          - Limited signed and numbered edition of <strong>{{ limited_prints_count }}</strong>
+          <br>
+        {% endif %}
+        - Thick high quality art paper, 135 gr
+        <br>
+        {% if product.variants.size > 1 %}
+          - Trimmed with 1cm border for framing for 8.3" x 11.7"
+          <br>
+          - Trimmed with 2cm border for framing for 14" x 20"
+        {% else %}
+          {% unless product.tags contains 'kylo ren' or product.tags contains 'vertigo' %}
+            - Trimmed with 2cm border for framing
+          {% endunless %}
+        {% endif %}
+      {% elsif product.type == 'Moshi Kun Cards' %}
+        - These 7.5 x 7.5 cm mini print cards are high quality printed and come protected in a crystal clear bag packaging. <br>
+        - Collect them all ( Pokemoooooooon!!!), or just grab your favorite characters from movies, tv shows, video games...
+      {% elsif product.type == 'Goodies' %}
+        Unique Pin design by Mike Wrobel.
+      {% endif %}
+    </p>
+
+    {% if product.tags contains 'batman-series' %}
+      {% include 'batman-series-package' %}
+    {% endif %}
+
+    {% include 'products-with-the-same-design' %}
+  </div>
+</div>
+
+{% comment %}
+	{% include 'related-products' %}
+{% endcomment %}

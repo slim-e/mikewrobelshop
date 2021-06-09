@@ -1,0 +1,24 @@
+{% assign product_found = false %}
+{% assign skip_product = product %}
+
+<div class="row collection-header">
+  <div class="col s12 m8 l8 collection-header-wrapper">
+    <h1 class="collection-header-wrapper-title">You might also like this</h1>
+  </div>
+</div>
+
+{% paginate product_collection.products by 4 %}
+  <div class="collection-grid">
+    {% for product in product_collection.products %}
+      {% assign rowindex = forloop.index | modulo: 3 %}
+
+      {% unless product.id == skip_product.id %}
+        <div
+          id="product-{{ forloop.index | plus:paginate.current_offset }}"
+          class="collection-grid-product-item collection-index-{{ rowindex }}">
+          {% include 'related-products-item' with product %}
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+{% endpaginate %}

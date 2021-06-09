@@ -1,0 +1,21 @@
+<form
+  action="/search/collections/all"
+  method="get"
+  class="col s12"
+  role="search">
+  <div class="row">
+    <div id="search-input" class="col s12 m4 l4 offset-m3 offset-l3">
+      <input type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="GOT, Fujiland, Samurai..."
+        aria-label="{{ 'general.search.placeholder' | t }}">
+    </div>
+
+    <div id="search-button" class="col s12 m2 l2">
+      <button type="submit" class="base-btn">
+        {{ 'general.search.submit' | t }}
+      </button>
+    </div>
+  </div>
+</form>

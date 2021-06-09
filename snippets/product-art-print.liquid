@@ -1,0 +1,80 @@
+{% assign product_images = product.images | reverse %}
+{% if product.tags contains 'landscape' %}
+  {% assign product_main_image = product_images[1] %}
+{% else %}
+  {% assign product_main_image = product_images.first %}
+{% endif %}
+
+<div class="art-prints product-drawer-container container">
+  <div class="row">
+    <div class="col s12 product-drawer-image art-prints-image">
+      <img style="{% if product.tags contains 'kylo ren' or product.tags contains 'vertigo' or product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}padding: 0;{% endif %}"
+        src="{{ product_main_image | product_img_url: 'master' | split: '?' | first }}"
+        alt="{{ product.metafields_global_title_tag | escape }} Art Print"
+        class="lazy {% unless product.tags contains 'Iconic Toys' %}with-white-borders{% endunless %}"
+        data-src="{{ product_main_image | product_img_url: 'master' | split: '?' | first }}" />
+
+        <span class="product-drawer-image-warning">
+          * Art Prints are printed without the watermark of course *
+        </span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 center product-drawer-summary">
+      <div class="product-drawer-summary-header">
+        <p class="product-drawer-summary-header-name">{{ product.title }}</p>
+        <p class="product-drawer-summary-header-price">
+          {{ product.variants.first.option2 | remove: 'medium-' | split: 'x' | join: '"x' | append: '"' }} - {{ product.first_available_variant.price | money }}
+          {% if product.variants.size > 1 %}
+            &nbsp;&nbsp;OR&nbsp;&nbsp;
+            {{ product.variants.last.option2 | remove: 'large-' | split: 'x' | join: '"x' | append: '"' }} - {{ product.variants.last.price | money }}
+          {% endif %}
+        </p>
+
+        <p>
+          {% if product.tags contains 'Iconic Toys' %}
+            Limited signed and Numbered Edition of 500
+          {% elsif product.tags contains 'vertigo' %}
+            Limited signed and Numbered Edition of 600
+          {% elsif product.variants.first.option1 contains 'signed' %}
+            Limited signed and Numbered Edition of 400
+          {% endif %}
+        </p>
+      </div>
+
+      {% if product.variants.size > 1 %}
+        <form class="product-drawer-summary-form">
+          {% include "add-to-cart-button" with product %}
+
+          {% include "product-drawer-add-to-cart-feedbacks" %}
+        </form>
+      {% else %}
+        {% include "add-to-cart-button" with product %}
+
+        {% include "product-drawer-add-to-cart-feedbacks" %}
+      {% endif %}
+
+      <div class="product-drawer-summary-description">
+        <strong>Product Details :</strong>
+        <br>
+        - Thick high quality art paper, 135 gr
+        <br>
+        {% unless product.tags contains 'Iconic Toys' or product.tags contains 'kylo ren' %}
+          - Trimmed with 2cm border for framing
+          <br>
+        {% endunless %}
+        <br>
+        <strong>
+          ** Please allow 2~6 weeks for delivery depending on your country **
+        </strong>
+      </div>
+
+      <a
+        id="product-drawer-close-{{ product.id }}"
+        class="mobile-cart-close hide-on-med-and-up">
+        {% include 'mobile-close-button-icon' %}
+      </a>
+    </div>
+  </div>
+</div>

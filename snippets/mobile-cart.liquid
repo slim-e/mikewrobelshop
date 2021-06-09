@@ -1,0 +1,111 @@
+<div class="container cart-container">
+  <div class="row">
+    <div
+      data-cart-view="data-cart-view"
+      rv-show="cart.item_count | gt 0">
+      <h4 class="white-text big-title mobile-cart-title">{{ 'cart.general.title' | t }}</h4>
+
+      <ul class="cart-container-form-list">
+        <li class="item" rv-each-item="cart.items">
+          <div class="image cart-container-form-list-image">
+            <img
+              rv-src="item.image | productImageSize 'small'"
+              class="left lazy cart-container-form-list-img" />
+          </div>
+
+          <div class="summary">
+            <a
+              class="delete-from-cart"
+              rv-data-cart-remove="index | plus 1">&times;</a>
+
+            <span class="title" rv-text="item.title | title"></span>
+            <span class="variant" rv-text="item.title | variant"></span>
+            <span rv-text="item.price | money"></span>
+            <span rv-text="item.quantity | quantity"></span>
+          </div>
+        </li>
+      </ul>
+
+      <form id="cart" action="/cart" method="post" novalidate
+        class="cart-container-form"
+        rv-show="cart.item_count | gt 0">
+
+        {% if cart.errors.size > 0 %}
+          <ul class="note errors">
+            {% for error in cart.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <div class="cart-container-form-checkout">
+          <span class="total" rv-html="cart.total_price | money"></span>
+
+          <input
+            type="submit"
+            name="checkout"
+            class="submit"
+            value="{{ 'cart.general.checkout' | t }}">
+
+          {% if additional_checkout_buttons %}
+            <style media="screen">
+              .additional-checkout-button--paypal-express {
+                background-color: #ffc439 !important;
+                color: #444444 !important;
+              }
+              .additional-checkout-button {
+                border: 0 !important;
+                border-radius: 0;
+                display: inline-block;
+                margin: 10px 0 0;
+                padding: 8px 25px !important;
+                width: 100%;
+                font-weight: normal !important;
+                line-height: 20px !important;
+                text-align: center !important;
+                text-decoration: none !important;
+                text-transform: none !important;
+                border-radius: 0 !important;
+              }
+              .additional-checkout-button:hover {
+                opacity: .9;
+              }
+              .additional-checkout-button+.additional-checkout-button {
+                margin-left: 0;
+                margin-top: 15px;
+              }
+              .additional-checkout-button+.additional-checkout-button {
+                margin: 15px 0 0 !important;
+                padding: 0 !important;
+              }
+              .paypal-button.paypal-button-shape-rect {
+                border-radius: 0 !important!;
+              }
+            </style>
+            <div class="paypal-checkout" style="padding: 0; width: 100%">
+              {{ content_for_additional_checkout_buttons }}
+            </div>
+          {% endif %}
+
+          <p class="notes">
+            {{ 'cart.general.taxes_extra' | t }}
+            <br><br>
+            <strong>
+              * Please allow 2~6 weeks for delivery depending on your country *
+            </strong>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <div data-cart-view="data-cart-view" rv-show="cart.item_count | lt 1">
+      <h4 class="big-title white-text">{{ 'cart.general.title' | t }}</h4>
+
+      <p>Your cart is empty... :(</p>
+    </div>
+
+    <a class="mobile-cart-close hide-on-med-and-up">
+      {% include 'mobile-close-button-icon' %}
+    </a>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+{% assign product_images = product.images | reverse %}
+
+{% assign landscape = false %}
+{% if product.tags contains 'landscape' %}
+  {% assign landscape = true %}
+{% endif %}
+
+<div
+  class="col s6 m4 l4 product-block-container collection-item-product-{{ product.id }}"
+  data-loop-index="{{ forloop.index }}">
+
+  {% assign product_images = product.images | reverse %}
+  {% if landscape %}
+    {% assign product_main_image = product_images[1] %}
+  {% else %}
+    {% assign product_main_image = product_images.first %}
+  {% endif %}
+
+  <a
+    id="collection-item-trigger-{{ product.id }}"
+    href="{{ product.url | within: collection }}"
+    class="product-block">
+    <div class="reveal">
+      {% if product.tags contains 'Iconic Toys' %}
+        {% assign item_main_image = product_images[1] %}
+      {% else %}
+        {% assign item_main_image = product_images.first %}
+      {% endif %}
+
+      <img
+        src="{{ item_main_image | product_img_url: '270x', scale: 3 | split: '?' | first }}"
+        sizes="25vw"
+        srcset="{{ item_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ item_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ item_main_image | product_img_url: '400x', scale: 3 | split: '?' | first }} 400w, {{ item_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 800w, {{ item_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1000w, {{ item_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1400w, {{ item_main_image | product_img_url: 'master', scale: 3 | split: '?' | first }} 1800w"
+        alt="{{ item_main_image.alt | escape }}" />
+
+      <div class="hidden hide-on-med-and-down">
+        <div class="caption">
+          <div class="centered">
+            <p>{{ product.title }}</p>
+            <p>-</p>
+            <p>
+              {% if product.variants.size > 1 %}
+                {{ product.variants.first.price | money }} ~ {{ product.variants.last.price | money }}
+              {% else %}
+                {{ product.price | money }}
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <p class="collection-grid-item-product-price hide-on-med-and-up white">
+    {% if product.variants.size == 2 %}
+      {{ product.variants.first.price | money }} ~ {{ product.variants.last.price | money }}
+    {% else %}
+      {{ product.price | money }}
+    {% endif %}
+  </p>
+</div>

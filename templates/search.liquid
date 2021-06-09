@@ -1,0 +1,57 @@
+{% include "error-404" %}
+
+{% comment %}
+{% assign respond_js_secret_key = shop.domain | md5 %}
+{% unless search.terms == respond_js_secret_key %}
+
+<div class="row search-row">
+  {% if search.performed %}
+    {% paginate search.results by 12 %}
+      {% if search.results_count == 0 %}
+        <h4 class="col s12">
+          {{ 'general.search.no_results_html' | t: terms: search.terms }}
+        </h4>
+
+        {% include 'search-bar' %}
+      {% else %}
+        <h4 class="col s12">
+          {{ 'general.search.results_for_html' | t: terms: search.terms }}
+        </h4>
+
+        {% include 'search-bar' %}
+
+        <div class="row search-results">
+          {% for item in search.results %}
+            {% include 'search-result' %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if paginate.pages > 1 %}
+        <div class="col s12 search-pagination center">
+          {% include 'pagination-custom' %}
+        </div>
+
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $('.thumbnail').each(function() {
+              var column = $(this).find('.product-block-container').attr('data-loop-index') % 3;
+
+              $(this).addClass('search-result-column-' + column);
+            });
+          });
+        </script>
+      {% endif %}
+    {% endpaginate %}
+  {% else %}
+    <h4 class="big-title">Search</h4>
+
+    {% include 'search-bar' %}
+  {% endif %}
+</div>
+
+{% else %}
+  {% include 'respond' %}
+  {% layout none %}
+{% endunless %}
+{% endcomment %}

@@ -1,0 +1,46 @@
+<div class="row cart__row" data-id="{{ item.id }}">
+  <div class="col s12 m4 l4 cart__product-img">
+    <img id="cart__product-img__print"
+      src="{{ item.product.handle | replace: '-', '_' | append: '.jpg' | file_url }}"
+      alt="{{ item.product.metafields_global_title_tag }}" />
+  </div>
+
+  <div class="col s12 m8 l8 cart__product-desc">
+    <p class="cart__product-header">
+      <p class="cart__product-header__title">{{ item.product.title }}</p>
+      <br>
+      <span>{{ item.product.type }} / {{ item.variant.title }}</span>
+    </p>
+
+    <div class="cart-product__body col s12">
+      <div class="price">
+        <span class="left">{{ 'cart.label.price' | t }}</span>
+        <span class="right">{{ item.price | money }}</span>
+      </div>
+
+      <div class="quantity">
+        <span class="left">Quantity</span>
+        <span class="right">{{ item.quantity }}</span>
+      </div>
+
+      <div class="total">
+        <span class="left">{{ 'cart.label.total' | t }}</span>
+        <span class="right">
+          {% if item.original_line_price != item.line_price %}
+            <small class="cart-item__original-price">
+              <s>{{ item.original_line_price | money }}</s>
+            </small>
+          {% endif %}
+          {{ item.line_price | money }}
+        </span>
+        {% for discount in item.discounts %}
+          <small class="cart-item__discount">{{ discount.title }}</small>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="cart-product__footer col s12 center ">
+      <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-line="{{ forloop.index }}" class="col s12 m1 l1 right delete-from-cart" title="Remove from cart">X</a>
+    </div>
+  </div>
+</div>

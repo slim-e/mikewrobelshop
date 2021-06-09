@@ -1,0 +1,42 @@
+<div id="credit-card-payment-instructions" class="modal">
+  <div class="modal-content">
+    <h4 class="center">Credit Card Payment Instructions</h4>
+    <div class="col s12 m3 l3">
+      <div class="instruction-card">
+        <img src="{{ 'credit-card-payment-instructions-1.png' | file_url: 'master' | split: '?' | first }}" alt="Credit Card Payment Step 1" />
+        <p>
+          1. At the end of the checkout, click on <strong>Complete Order</strong>.
+        </p>
+      </div>
+    </div>
+    <div class="col s12 m3 l3">
+      <div class="instruction-card">
+        <img src="{{ 'credit-card-payment-instructions-2.png' | file_url: 'master' | split: '?' | first }}" alt="Credit Card Payment Step 2" />
+        <p>
+          2. A popup window appears from Paypal.<br>Click on <strong>Create An Account</strong>.<br>It is just to access the Credit Card window : <strong>you won't create a Paypal account</strong>, don't worry.
+        </p>
+      </div>
+    </div>
+    <div class="col s12 m3 l3">
+      <div class="instruction-card">
+        <img src="{{ 'credit-card-payment-instructions-3.png' | file_url: 'master' | split: '?' | first }}" alt="Credit Card Payment Step 3" />
+        <p>
+          3. On the last screen, you have access to the <strong>PayPal Guest Checkout</strong>. Enter your financial details and scroll down.
+        </p>
+      </div>
+    </div>
+    <div class="col s12 m3 l3">
+      <div class="instruction-card">
+        <img src="{{ 'credit-card-payment-instructions-4.png' | file_url: 'master' | split: '?' | first }}" alt="Credit Card Payment Step 4" />
+        <p>
+          4. Finally, select <strong>No, I don’t want an account now.</strong>, then click on <strong>Pay Now</strong>.
+          <br>Done!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer right">
+    <a class="right col s12 m4 l4 modal-close">Got it!</a>
+  </div>
+</div>

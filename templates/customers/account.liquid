@@ -1,0 +1,116 @@
+<div class="row">
+  {% include "error-404" %}
+</div>
+
+{% comment %}
+<div class="row profile-header">
+  <div class="col s12 center">
+    <h4>My Profile</h4>
+  </div>
+</div>
+
+<div class="row profile-body">
+  <div class="col s12 m8 l8 profile-body__orders">
+    <h4>latest orders</h4>
+
+    {% paginate customer.orders 10 %}
+
+      {% if customer.orders.size != 0 %}
+
+        <table class="responsive-table border highlight centered">
+          <thead>
+            <tr>
+              <th data-field="order_number">
+                {{ 'customer.orders.order_number' | t }}
+              </th>
+              <th data-field="date">
+                {{ 'customer.orders.date' | t }}
+              </th>
+              <th data-field="payment_status">
+                {{ 'customer.orders.payment_status' | t }}
+              </th>
+              <th data-field="fulfillment_status">
+                {{ 'customer.orders.fulfillment_status' | t }}
+              </th>
+              <th data-field="total">
+                {{ 'customer.orders.total' | t }}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for order in customer.orders %}
+              <tr>
+                <td>{{ order.name | link_to: order.customer_url }}</td>
+                <td>{{ order.created_at | date: "%b %d, %Y" }}</td>
+                <td>{{ order.financial_status_label }}</td>
+                <td>{{ order.fulfillment_status_label }}</td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% else %}
+
+        <p class="left">{{ 'customer.orders.none' | t }}</p>
+
+      {% endif %}
+
+      {% if paginate.pages > 1 %}
+        <div class="col s12 center">
+          {% include 'pagination-custom' %}
+        </div>
+      {% endif %}
+
+    {% endpaginate %}
+
+    <br>
+    <br>
+    <p>
+      For <strong>any reclamation</strong>, please contact our <a href="mailto:hi@prodigi.uk?subject=Reclamation+for+an+order+from+Moshikun+Shop" rel="nofollow">print vendor</a> or our <a href="mailto:support@printaura.com?subject=Reclamation+for+an+order+from+Moshikun+Shop" rel="nofollow">tshirts vendor</a>.
+    </p>
+  </div>
+
+  <div class="col s12 m4 l4 profile-body__details">
+    <h4>account details</h4>
+
+    <div class="center">
+      <p class="name">{{ customer.name }}</p>
+      <p class="email">{{ customer.email }}</p>
+      {% if customer.default_address.phone != "" %}
+        <p class="telephone">{{ customer.default_address.phone }}</p>
+      {% endif %}
+
+      <hr></hr>
+
+      {% if customer.default_address != nil %}
+        <p class="address">
+          {{ customer.default_address.address1 }}
+          {% if customer.default_address.address2 != "" %}
+            {{ customer.default_address.address2 }}
+          {% endif %}
+          <br>
+          {% if customer.default_address.city != "" %}
+            {{ customer.default_address.city }},&nbsp;
+          {% endif %}
+          {% if customer.default_address.province_code != "" %}
+            {{ customer.default_address.province_code | upcase }}
+          {% endif %},&nbsp;
+          {% if customer.default_address.zip != "" %}
+            {{ customer.default_address.zip | upcase }}
+          {% endif %}
+          <br>
+          {% if customer.default_address.country != "" %}
+            {{ customer.default_address.country }}
+          {% endif %}
+        </p>
+        <span>default</span>
+      {% endif %}
+    </div>
+
+    <a href="/account/addresses" class="right">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+  </div>
+</div>
+
+{% endcomment %}

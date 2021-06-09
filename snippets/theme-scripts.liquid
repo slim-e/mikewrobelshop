@@ -1,0 +1,600 @@
+{{ 'js_lib_rivets-cart.min.js' | asset_url | script_tag }}
+
+<script language="JavaScript" type="text/javascript">
+  {% comment %}
+  // --------------------------------------------------
+  // Set Up Product Drawer
+  // --------------------------------------------------
+  function setupProductDrawer(selectorsHash) {
+    {% if template contains 'collection' and collection.handle contains '-tshirts' %}
+      // or collection.handle contains '-men-sweatshirts'
+      createDynamicTshirtDrawer($('.collection-tshirt-item-trigger'))
+    {% elsif template == 'index' %}
+      createDynamicPrintDrawer(selectorsHash['printSelectors']);
+      $('.home-grid-item-clothing-block').sideNav({
+        menuWidth: 550,
+        edge: 'right',
+        closeOnClick: true,
+        draggable: true
+      });
+    {% elsif collection.handle == "mike-wrobel-featured-products" or collection.handle == 'mike-wrobel-art-prints' or collection.handle == 'mike-wrobel-limited' or collection.handle == 'mike-wrobel-8090s-game-of-thrones-era-characters' %}
+      createDynamicPrintDrawer(selectorsHash['printSelectors']);
+    {% else %}
+      selectorsHash['prints'].sideNav({
+        menuWidth: 550,
+        edge: 'right',
+        closeOnClick: true,
+        draggable: true
+      });
+    {% endif %}
+
+    // Replace by collection goodies
+    {% if collection.handle != 'mike-wrobel-moshi-kun' %}
+      selectorsHash['goodiesAndCards'].sideNav({
+        menuWidth: 480,
+        edge: 'right',
+        closeOnClick: true,
+        draggable: true
+      });
+    {% else %}
+      createDynamicPrintDrawer(selectorsHash['printSelectors']);
+    {% endif %}
+
+    selectorsHash['landscapePrints'].sideNav({
+      menuWidth: 800,
+      edge: 'right',
+      closeOnClick: true,
+      draggable: true
+    });
+
+    if ($(window).width() < 500) {
+      selectorsHash['sliderItems'].sideNav({
+        menuWidth: 480,
+        edge: 'right',
+        closeOnClick: true,
+        draggable: true
+      });
+    }
+
+    selectorsHash['thumbnails'].on('click', 'li', function(event) {
+      event.preventDefault();
+      thumb_src = $(this).find('img').attr('src');
+
+      var image = $(this).parent().parent().parent().find('.product-drawer-image img');
+      image.attr('src', thumb_src);
+    });
+  }
+
+  // --------------------------------------------------
+  // Create Dynamic Tshirt Drawer
+  // --------------------------------------------------
+  function createDynamicTshirtDrawer(selector) {
+    selector.on('click', '', function(event) {
+      if ($(window).width() >= 500) {
+        event.preventDefault();
+
+        var productId = $(this).data('product-id');
+        $('.dynamic-product-tshirt').attr('id', 'product-drawer-' + productId);
+        $('#dynamicProductTshirt .mobile-cart-close').attr('id', 'product-drawer-close-' + productId);
+        $('#dynamicProductTshirt .clothing-colors-select-btn').attr('id', 'colorsList-' + productId);
+        $('#dynamicProductTshirt .clothing-sizes-select-btn').attr('id', 'sizesList-' + productId);
+        $('#dynamicProductTshirt .product-variants-select').attr('id', 'variantsList-' + productId);
+        $('#dynamicProductTshirt .product-drawer-summary-form-submit').attr('id', 'addToCart-' + productId);
+
+        var selectedSize = $('#dynamicProductTshirt .clothing-sizes-select-btn option:selected').val();
+        var selectedColor = $('#dynamicProductTshirt .clothing-colors-select-btn option:selected').val();
+        $('#dynamicProductTshirt .product-variants-select option').filter(function () {
+          if ($(this).data('options') === selectedSize + '_' + selectedColor) {
+            $('#dynamicProductTshirt .product-drawer-summary-form-submit').data('product', $(this).data('variant'));
+          }
+        });
+
+        $('#dynamicProductTshirt .product-drawer-summary-form-submit').data('product', $(this).data('first-variant-id'));
+
+        var productTitle = $(this).data('title');
+        $('#dynamicProductTshirt .product-drawer-summary-header-name').text(productTitle);
+
+        var productPrice = $(this).data('price');
+        $('#dynamicProductTshirt .product-drawer-summary-header-price').text(productPrice);
+
+        var productImageSrc = $(this).data('image-src');
+        $('#dynamicProductTshirt .tshirt-image img').attr('src', productImageSrc);
+
+        var productGender = $(this).data('gender');
+        $('#dynamicProductTshirt .' + productGender + '-tshirt-description').show();
+
+        var productContainer = $(this).parent();
+
+        var productThumbsImg = productContainer.find('.tshirt-thumbs-ul').html();
+        $('#dynamicProductTshirt .tshirt-thumbs-ul').html(productThumbsImg);
+
+        var productVariants = productContainer.find('.product-variants-select').html();
+        $('#dynamicProductTshirt .product-variants-select').html(productVariants);
+
+        if (!$(this).hasClass('binded')) {
+          $(this).addClass('binded');
+          $(this).sideNav({
+            menuWidth: 550,
+            edge: 'right',
+            closeOnClick: true,
+            draggable: true
+          });
+
+          $(this).click();
+        }
+      }
+    });
+  }
+
+  // --------------------------------------------------
+  // Create Dynamic Print Drawer
+  // --------------------------------------------------
+  function createDynamicPrintDrawer(selector) {
+    selector.on('click', '', function(event) {
+      event.preventDefault();
+
+      if ($(this).hasClass('product-item') || $(this).hasClass('moshikun-goodies-card-item') || $(this).hasClass('home-grid-product-art-print')) {
+
+        $('.dynamic-product-art-print').attr('id', 'product-drawer-' + $(this).data('product-id'));
+        $('#dynamicProductArtPrint .mobile-cart-close').attr('id', 'product-drawer-close-' + $(this).data('product-id'));
+
+        $('#dynamicProductArtPrint .product-drawer-summary-header-name').text($(this).data('title'));
+
+        if ($(this).hasClass('product-item') || $(this).hasClass('home-grid-product-art-print')) {
+          $('#dynamicProductArtPrint .product-drawer-summary-header-limited').hide();
+          if ($(this).data('limited') == '1') {
+            $('#dynamicProductArtPrint .product-drawer-summary-header-limited').show();
+          }
+
+          if ($(this).data('iconic-toys') == '1' || $(this).data('vertigo') == '1') {
+            $('#dynamicProductArtPrint .product-drawer-summary-description-with-white-borders').hide();
+            $('#dynamicProductArtPrint .art-prints-image img').css('padding', '0');
+          } else {
+            $('#dynamicProductArtPrint .product-drawer-summary-description-with-white-borders').show();
+            $('#dynamicProductArtPrint .art-prints-image img').css('padding', '23px');
+          }
+
+          var priceText = [$(this).data('subtitle').split(' - ')[0].split('x').join('"x'), $(this).data('subtitle').split(' - ')[1]].join('" - ');
+          $('#dynamicProductArtPrint .product-drawer-summary-header-price').text(priceText);
+          $('#dynamicProductArtPrint #addToCart').text('add to cart ' + priceText);
+
+          $('#dynamicProductArtPrint #addToCartLast').text('');
+          $('#dynamicProductArtPrint #addToCartLast').hide();
+          if ($(this).data('variant-last-id') != 0) {
+            $('#dynamicProductArtPrint #addToCartLast').data('product', $(this).data('variant-last-id'));
+            var addToCart2Text = [$(this).data('subtitle-last').split(' - ')[0].split('x').join('"x'), $(this).data('subtitle-last').split(' - ')[1]].join('" - ');
+            $('#dynamicProductArtPrint #addToCartLast').text('add to cart ' + addToCart2Text);
+            $('#dynamicProductArtPrint #addToCartLast').show();
+          }
+        } else if ($(this).hasClass('moshikun-goodies-card-item')) {
+          $('#dynamicProductArtPrint .product-drawer-summary-header-price').text('2.9"x2.9"' + $(this).data('subtitle'));
+        }
+
+        $('#dynamicProductArtPrint .product-drawer-image img').attr('src', $(this).data('image-src'));
+        $('#dynamicProductArtPrint #addToCart').data('product', $(this).data('variant-id'));
+
+        $('#batmanSeriesPackContainer').hide();
+        $('#dynamicProductArtPrint .product-drawer-summary-header-limited-batman').hide();
+        $('#dynamicProductArtPrint .product-drawer-summary-header-limited-cercei').hide();
+        $('#dynamicProductArtPrint .product-drawer-summary-header-limited').hide();
+        $('#dynamicProductArtPrint .product-drawer-summary-header-limited-vertigo').hide();
+
+        if ($(this).data('cercei') == '1') {
+          $('#dynamicProductArtPrint .product-drawer-summary-header-limited-cercei').show();
+          $('#dynamicProductArtPrint .product-drawer-image.art-prints-image img').css('padding', '0');
+        } else if ($(this).data('batman') == '1') {
+          $('#batmanSeriesPackContainer').show();
+          $('#dynamicProductArtPrint .product-drawer-summary-header-limited-batman').show();
+        } else if ($(this).data('iconic-toys') == '1') {
+          $('#dynamicProductArtPrint .product-drawer-summary-header-limited-batman').show();
+        } else if ($(this).data('vertigo') == '1') {
+          $('#dynamicProductArtPrint .product-drawer-summary-header-limited-vertigo').show();
+        } else if ($(this).data('limited') == '1') {
+          $('#dynamicProductArtPrint .product-drawer-summary-header-limited').show();
+        } else {
+          $('#dynamicProductArtPrint .product-drawer-image.art-prints-image img').css('padding', '23px');
+        }
+
+        if (!$(this).hasClass('binded')) {
+          $(this).addClass('binded');
+          $(this).sideNav({
+            menuWidth: 550,
+            edge: 'right',
+            closeOnClick: true,
+            draggable: true
+          });
+
+          $(this).click();
+        }
+      }
+    });
+  }
+  {% endcomment %}
+
+  // --------------------------------------------------
+  // Set Up Multiple Selector
+  // --------------------------------------------------
+  function setUpMultipleSelectors(selectorsHash) {
+    if (selectorsHash['sizes']) {
+      selectorsHash['sizes'].change(function(event) {
+        var productId = $(this).attr('id').split('-')[1];
+        var selectedSize = $(this).find('option:selected').val();
+        var selectedColor = $(this).parent().find('#colorsList-' + productId + ' option:selected').val();
+
+        $(this).parent().find('#variantsList-' + productId + ' option').filter(function () {
+          if ($(this).data('options') === selectedSize + '_' + selectedColor) {
+            $(this).parent().parent().find('#addToCart-' + productId).data('product', $(this).data('variant'));
+          }
+        });
+      });
+    }
+
+    if (selectorsHash['colors']) {
+      selectorsHash['colors'].change(function(event) {
+        var productId = $(this).attr('id').split('-')[1];
+        var selectedColor = $(this).find('option:selected').val();
+        var selectedSize = $(this).parent().find('#sizesList-' + productId + ' option:selected').val();
+
+        $(this).parent().find('#variantsList-' + productId + ' option').filter(function () {
+          if ($(this).data('options') === selectedSize + '_' + selectedColor) {
+            $(this).parent().parent().find('#addToCart-' + productId).data('product', $(this).data('variant'));
+          }
+        });
+      });
+    }
+
+    if (selectorsHash['prints']) {
+      selectorsHash['prints'].change(function(event) {
+        var productId = $(this).attr('id').split('-')[1];
+        var selectedPrintId = $(this).find('option:selected').val();
+
+        $(this).parent().find('#variantsList-' + productId + ' option').filter(function () {
+          if ($(this).data('variant').toString() === selectedPrintId.toString()) {
+            $(this).parent().parent().find('#addToCart-' + productId).data('product', $(this).data('variant'));
+          }
+        });
+      });
+    }
+
+    if (selectorsHash['moshikun']) {
+      selectorsHash['moshikun'].click(function(event) {
+        event.stopPropagation();
+
+        var addToCartBtn = $(this),
+            addToCartBtnOriginalText = $(this).text();
+
+        if (addToCartBtn.data('product')) {
+          CartJS.addItem(addToCartBtn.data('product'), 1, {}, {
+            "success": function(data, textStatus, jqXHR) {
+              addToCartBtn.addClass('disabled');
+              addToCartBtn.text('Thank you!');
+              addToCartBtn.parent().find('.cart-feedbacks').addClass('show-success-feedback');
+
+              window.setTimeout(function() {
+                addToCartBtn.removeClass('disabled');
+                addToCartBtn.text(addToCartBtnOriginalText);
+                addToCartBtn.parent().find('.cart-feedbacks').removeClass('show-success-feedback');
+              }, 2000);
+            },
+            "error": function(jqXHR, textStatus, errorThrown) {              
+              $(this).addClass('disabled');
+              addToCartBtn.text('error... :(');
+              $(this).parent().find('.cart-feedbacks').addClass('show-error-feedback');
+            }
+          });
+        }
+      });
+    }
+  }
+
+  // --------------------------------------------------
+  // ON DOCUMENT READY
+  // --------------------------------------------------
+  $(document).ready(function() {
+    // --------------------------------------------------
+    // Back To Top Scroll
+    // --------------------------------------------------
+    $(window).scroll(function(){
+      if ($(this).scrollTop() > 100) {
+        $('#back-to-top').addClass('show');
+      } else {
+        $('#back-to-top').removeClass('show');
+      }
+    });
+    $('#back-to-top').click(function(){
+      $("html, body").animate({ scrollTop: 0 }, 600);
+      return false;
+    });
+
+    // --------------------------------------------------
+    // Cart Rivert Configuration
+    // --------------------------------------------------
+    rivets.configure({
+      prefix: 'rv',
+      preloadData: true,
+      rootInterface: '.',
+      templateDelimiters: ['{', '}'],
+      iterationAlias : function(modelName) {
+        return '%' + modelName + '%';
+      },
+      handler: function(target, event, binding) {
+        this.call(target, event, binding.view.models)
+      },
+      executeFunctions: false
+    })
+    rivets.formatters.title = function(value){
+      return value.split(' - ')[0];
+    }
+    rivets.formatters.variant = function(value){
+      return value.replace("large-", '').replace("medium-", '').replace(' / none', '').split(' - ')[1];
+    }
+    rivets.formatters.quantity = function(value){
+      return 'x ' + value.toString();
+    }
+    rivets.formatters.money = function(value){
+      var priceStr = value.toString();
+      var offset = priceStr.length - 2;
+      return '$' + priceStr.substring(0, offset) + '.' + priceStr.substring(offset);
+    }
+
+    // --------------------------------------------------
+    // Mobile Menu Panel
+    // --------------------------------------------------
+    $('.menu-button-collapse').sideNav({
+      menuWidth: 400,
+      edge: 'left',
+      closeOnClick: false,
+      draggable: true
+    });
+    $('.mobile-menu-close').click(function(event) {
+      $('.menu-button-collapse').sideNav('hide');
+    });
+    $('.mobile-menu-list-item-icon').click(function(event) {
+      $(this).parent().find('.mobile-menu-list-item-link')[0].click();
+    });
+
+    // --------------------------------------------------
+    // Cart Button
+    // --------------------------------------------------
+    $('.cart-button-collapse').sideNav({
+      menuWidth: 480,
+      edge: 'right',
+      closeOnClick: false,
+      draggable: true
+    });
+    $('.mobile-cart-close').click(function(event) {
+      $('.menu-button-collapse').sideNav('hide');
+    });
+
+    // --------------------------------------------------
+    // Mobile Cart Panel
+    // --------------------------------------------------
+    $('#mobileNavCartBtn').click(function(event) {
+      $('.menu-button-collapse').sideNav('hide');
+    });
+
+    // --------------------------------------------------
+    // Initiate Cart
+    // --------------------------------------------------
+    CartJS.init({{ cart | json }}, {
+      "dataAPI": true,
+      "requestBodyClass": "loading",
+      "debug": false,
+      "moneyFormat": "{{ shop.money_format }}",
+      "moneyWithCurrencyFormat": "{{ shop.money_with_currency_format }}"
+    });
+
+    // --------------------------------------------------
+    // Delete Item From Cart
+    // --------------------------------------------------
+    $('.delete-from-cart').click(function(event) {
+      var productTitle = $(this).parent().find('.title').text();
+    });
+
+    // --------------------------------------------------
+    // Product Form Submit Notification
+    // --------------------------------------------------
+    $('.product-drawer-summary-form-submit.pack').click(function(event) {
+      event.stopPropagation();
+
+      var addToCartBtn = $(this);
+
+      addToCartBtn.parent().find('.product-drawer-summary-form-pack-buttons').each(function() {
+        CartJS.addItem($(this).attr('data-product'), 1, {});
+        addToCartBtn.addClass('disabled');
+        addToCartBtn.text('Thank you!');
+        addToCartBtn.parent().find('.cart-feedbacks').addClass('show-success-feedback');
+
+        window.setTimeout(function() {
+          addToCartBtn.removeClass('disabled');
+          addToCartBtn.text('Add to cart');
+          addToCartBtn.parent().find('.cart-feedbacks').removeClass('show-success-feedback');
+        }, 2000);
+      });
+    });
+
+    var clothingSelectorsHash = {
+      sizes : $('select[id^="sizesList-"]'),
+      colors : $('select[id^="colorsList-"]'),
+      prints : $('select[id^="printsList-"]'),
+      moshikun : $('.product-drawer-summary-form-submit:not(.pack)')
+    }
+    setUpMultipleSelectors(clothingSelectorsHash);
+
+    // --------------------------------------------------
+    // Desktop Moshikun Hover Effect
+    // --------------------------------------------------
+    $('.desktop-nav-home').hover(function() {
+      $('.moshikun-alive').removeClass('active');
+      $('.moshikun-dead').addClass('active');
+    }, function() {
+      $('.moshikun-dead').removeClass('active');
+      $('.moshikun-alive').addClass('active');
+    });
+
+    var desktopAcc = $('.desktop-nav-trigger');
+    var j;
+    for (j = 0; j < desktopAcc.length; j++) {
+      desktopAcc[j].onclick = function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight){
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      }
+    }
+
+    {% if template == 'index' %}
+      // var selectorsHash = {
+      //   prints : $('.home-grid-item-block'),
+      //   printSelectors : $('[id^="home-grid-item-trigger-"]'),
+      //   landscapePrints : $('.home-grid-landscape-print-block'),
+      //   goodiesAndCards : $('.home-grid-moshikun-goodies-block'),
+      //   thumbnails : $('div[class$="-thumbs"]'),
+      //   sliderItems : $('.mobile-slider-grid-item')
+      // };
+      // setupProductDrawer(selectorsHash);
+
+      if ($(window).width() < 500) {
+        $('#home-page-product-item-3').insertAfter($('#home-page-product-item-4'));
+        $('#home-page-product-item-9').insertAfter($('#home-page-product-item-10'));
+        $('#home-page-product-item-15').insertAfter($('#home-page-product-item-16'));
+      }
+    {% endif %}
+  });
+
+  // TODO: function disableCtrlKeyCombination(e)
+
+  // --------------------------------------------------
+  // ON WINDOW LOAD
+  // --------------------------------------------------
+  $(window).on("load", function() {
+    // --------------------------------------------------
+    // T-shirts Thumbnails Change
+    // --------------------------------------------------
+    $('div[class$="-thumbs"]').on('click', 'li', function(event) {
+      event.preventDefault();
+      thumb_src = $(this).find('img').attr('src');
+
+      var image = $(this).parent().parent().parent().find('.product-drawer-image img');
+
+      image.attr('srcset', '');
+      image.attr('src', thumb_src);
+    });
+
+    {% if template == 'index' %}
+      $('.col.s6.m4.l4.home-grid-item').height($('.col.s6.m4.l4.home-grid-item').width());
+    {% endif %}
+  });
+
+  document.oncontextmenu = function(e) {
+    e = e || window.event;
+    if (/^img$/i.test((e.target || e.srcElement).nodeName)) return false;
+  };
+</script>
+
+{% if template == 'index' %}
+  <script type="text/javascript">
+    $(window).resize(function() {
+      $('.col.s6.m4.l4.home-grid-item').height($('.col.s6.m4.l4.home-grid-item').width());
+    });
+  </script>
+
+{% elsif template contains 'collection' or template contains 'product' %}
+  <script type="text/javascript">
+    var myLazyLoad2 = new LazyLoad({ elements_selector: ".lazy" });
+
+    // https://gist.github.com/rickydazla/1489365
+    var pInfScrLoading = false;
+    var pInfScrDelay = 250;
+    function pInfScrExecute() {
+      pInfScrNode = $('.more').last();
+      pInfScrURL = $('.more a').last().attr("href");
+
+      if(pInfScrNode.length > 0 && pInfScrNode.css('display') != 'none') {
+        $.ajax({
+          type: 'GET',
+          url: pInfScrURL,
+          beforeSend: function() {
+            pInfScrNode.hide();
+            $('.more-loading').show();
+          },
+          success: function(data) {
+            myLazyLoad2.update();
+
+            pInfScrNode.next().remove();
+            pInfScrNode.remove();
+
+            var filteredData = $(data).find(".collection-grid");
+
+            filteredData.insertBefore($("#product-list-foot"));
+
+            $('.more-loading').hide();
+
+            // var selectorsHash = {
+            //   prints : filteredData.find('.product-item'),
+            //   printSelectors : filteredData.find('[id^="collection-item-trigger-"]'),
+            //   landscapePrints : filteredData.find('.product-item-landscape'),
+            //   goodiesAndCards : filteredData.find('.moshikun-goodies-card-item'),
+            //   thumbnails : filteredData.find('div[class$="-thumbs"]'),
+            //   sliderItems : $('.mobile-slider-grid-item')
+            // };
+            // setupProductDrawer(selectorsHash);
+
+            // var clothingSelectorsHash = {
+            //   sizes : filteredData.find('select[id^="sizesList-"]'),
+            //   colors : filteredData.find('select[id^="colorsList-"]'),
+            //   prints : filteredData.find('select[id^="printsList-"]'),
+            //   moshikun : filteredData.find('.product-drawer-summary-form-submit:not(.pack)')
+            // }
+            // setUpMultipleSelectors(clothingSelectorsHash);
+
+            attachClickEvent();
+          },
+          dataType: "html"
+        });
+      }
+    }
+
+    function attachClickEvent() {
+      $('li.more a').click(function(event){
+        pInfScrExecute();
+        event.stopPropagation();
+        return false;
+      });
+    }
+
+    $(document).ready(function () {
+      var myLazyLoad = new LazyLoad({
+        elements_selector: ".lazy",
+        to_webp: true,
+        load_delay: 300
+      });
+
+      // var selectorsHash = {
+      //   prints : $('.product-item'),
+      //   printSelectors : $('[id^="collection-item-trigger-"]'),
+      //   landscapePrints : $('.product-item-landscape'),
+      //   goodiesAndCards : $('.moshikun-goodies-card-item'),
+      //   thumbnails : $('div[class$="-thumbs"]'),
+      //   sliderItems : $('.mobile-slider-grid-item')
+      // };
+      // setupProductDrawer(selectorsHash);
+      attachClickEvent();
+
+      {% if collection.handle contains '8090s' %}
+        $('.thrones-trigger')[0].onclick = function() {
+          this.classList.toggle("active");
+          var panel = this.nextElementSibling;
+          if (panel.style.maxHeight){
+            panel.style.maxHeight = null;
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          }
+        }
+      {% endif %}
+    });
+  </script>
+{% endif %}

@@ -1,0 +1,132 @@
+{% if cart.item_count > 0 %}
+  <form id="shoppingCartForm" action="/cart" method="post" novalidate class="cart-wrapper">
+
+    <h1 class="col s12 left">{{ 'cart.general.title' | t }}</h1>
+
+    {% if cart.announcements.size > 0 %}
+      <ul class="note cart__announcements">
+        {% for announcement in cart.announcements %}
+          <li>{{ announcement }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if cart.errors.size > 0 %}
+      <ul class="note errors">
+        {% for error in cart.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% for item in cart.items %}
+      {% if item.product.handle contains 'man-sweatshirt' %}
+        {% include 'cart-product-man-sweatshirt' %}
+      {% elsif item.product.handle contains 'woman-longsleeve' %}
+        {% include 'cart-product-woman-longsleeve' %}
+      {% elsif item.product.handle contains 'man-tshirt' %}
+        {% include 'cart-product-man-tshirt' %}
+      {% elsif item.product.handle contains 'woman-tshirt' %}
+        {% include 'cart-product-woman-tshirt' %}
+      {% else %}
+        {% include 'cart-product-art-print' %}
+      {% endif %}
+    {% endfor %}
+
+    {% if cart.discounts.size > 0 %}
+      <div class="cart__row center">
+        <h6>
+          {{ 'cart.general.additional_savings' | t }}
+          <span class="h3 cart__additional-savings__price">{{ cart.discount.total_savings | money }}</span>
+          {% for discount in cart.discounts %}
+            <small class="cart__additional-savings__discount">{{ discount.title }}</small>
+          {% endfor %}
+        </h6>
+      </div>
+    {% endif %}
+
+    <div class="row cart__row center cart__row-subtotal">
+      <div class="col s12">
+        <h6>
+          {{ 'cart.general.subtotal' | t }}
+          <span>{{ cart.total_price | money }}</span>
+
+          {% if cart.total_discounts > 0 %}
+            {% assign savings = cart.total_discounts | money %}
+            <small class="cart__subtotal__savings">
+              {{ 'cart.general.savings_html' | t: price: savings }}
+            </small>
+          {% endif %}
+        </h6>
+      </div>
+    </div>
+
+    <div class="row cart_row cart__row-checkout">
+      <div class="col s12 m6 l6 cart__seller-instructions">
+        <textarea placeholder="Special instructions for seller (Building name, lobby digital code...)" name="note" class="input-full cart__instructions" id="cartSpecialInstructions">{{ cart.note }}</textarea>
+      </div>
+
+      <div class="col s12 {% if settings.cart_notes_enable %}m6 l6{% endif %} cart__checkout-buttons">
+        <p class="cart__subtotal__note right">
+          <em>{{ 'cart.general.taxes_extra' | t }}</em>
+        </p>
+
+        <input type="submit" name="checkout" class="checkout-cart col s12 right" value="{{ 'cart.general.checkout' | t }}">
+
+        {% if additional_checkout_buttons %}
+          <style media="screen">
+            .additional-checkout-button--paypal-express{
+              background-color: #ffc439 !important;
+              color: #444444 !important;
+            }
+            .additional-checkout-button {
+              border: 0 !important;
+              border-radius: 0;
+              display: inline-block;
+              margin: 10px 0 0;
+              padding: 5px 25px !important;
+              width: 100%;
+              font-weight: normal !important;
+              line-height: 20px !important;
+              text-align: center !important;
+              text-decoration: none !important;
+              text-transform: none !important;
+              border-radius: 0 !important;
+            }
+          </style>
+          <div class="col s12" style="padding: 0; width: 100%">
+            {{ content_for_additional_checkout_buttons }}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </form>
+
+  {% include 'credit-card-payment-instructions' %}
+{% else %}
+  <div class="empty-cart">
+    <h1 class="col s12 center">{{ 'cart.general.title' | t }}</h1>
+
+    <p class="col s12 center">
+      Your cart is empty, continue browsing <a href="/collections/mike_wrobel_all_art_prints_and_tshirts">here</a>
+    </p>
+  </div>
+{% endif %}
+
+<script type="text/javascript">
+  $(window).load(function () {
+    $('body').addClass('and-now-show');
+  });
+
+  $(document).ready(function () {
+    $('.cart__product-header span').text(function() {
+      var text0 = $(this).text().split('_').join(' ');
+      $(this).text(text0.replace(/x/g, '"x').replace(/ \/ none/g, '"'));
+    });
+
+    $('#clearCart').click(function() {
+      CartJS.clear();
+    });
+  });
+</script>

@@ -1,0 +1,190 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+
+<!-- AMPIFY-ME:START -->
+{% include 'ampify-me-snippet' %}
+<!-- AMPIFY-ME:END -->
+
+  <meta charset="utf-8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="cleartype" content="on">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="google-site-verification" content="_VDp6oEzgU3Du1AJJp8YiT9jDF3Xg-AWEss8M-I2Epg" />
+  <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Cache-Control" content="private,max-age=86400">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="Content-Type-Script" content="text/javascript" />
+  <meta name="Content-Type-Style" content="text/css" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="noarchive">
+  <meta name="revisit-after" content="7 days" />
+  <meta name="p:domain_verify" content="9b02480d49e7abef4f933970222d6a56"/>
+
+  {% if template contains 'collection' %}
+    <meta name="keywords" content="mike wrobel, art print, graphic design, manga, animation, fan art, game of thrones, design, art, artist, vector illustration, got, gta, pop culture, pop art, movies, movies posters, tv shows, {{ product.title }}">
+  {% elsif template contains 'product' %}
+    <meta name="keywords" content="mike wrobel, art print, graphic design, manga, animation, fan art, game of thrones, design, art, artist, vector illustration, got, gta, pop culture, pop art, movies, movies posters, tv shows, {{ product.title }}, {{ product.tags | join: ', ' }}">
+  {% else  %}
+    <meta name="keywords" lang="en-us" content="mike wrobel, art print, graphic design, manga, animation, fan art, game of thrones, design, art, artist, vector illustration, got, gta, pop culture, pop art, movies, movies posters, tv shows" />
+  {% endif %}
+
+  <link rel="alternate" href="https://moshikun-shop.com/" hreflang="en">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- iPad retina icon -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '152x152', scale: 3 | split: '?' | first }}"
+    sizes="152x152"
+    rel="apple-touch-icon-precomposed">
+  <!-- iPad retina icon (iOS < 7) -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '144x144', scale: 3 | split: '?' | first }}"
+    sizes="144x144"
+    rel="apple-touch-icon-precomposed">
+  <!-- iPad non-retina icon -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '76x76', scale: 3 | split: '?' | first }}"
+    sizes="76x76"
+    rel="apple-touch-icon-precomposed">
+  <!-- iPad non-retina icon (iOS < 7) -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '72x72', scale: 3 | split: '?' | first }}"
+    sizes="72x72"
+    rel="apple-touch-icon-precomposed">
+  <!-- iPhone 6 Plus icon -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '120x120', scale: 3 | split: '?' | first }}"
+    sizes="120x120"
+    rel="apple-touch-icon-precomposed">
+  <!-- iPhone retina icon (iOS < 7) -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '114x114', scale: 3 | split: '?' | first }}"
+    sizes="114x114"
+    rel="apple-touch-icon-precomposed">
+  <!-- iPhone non-retina icon (iOS < 7) -->
+  <link href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '57x57', scale: 3 | split: '?' | first }}"
+    sizes="57x57"
+    rel="apple-touch-icon-precomposed">
+  <link rel="shortcut icon"
+    href="{{ 'mike_wrobel_moshikun.png' | file_img_url: 'small', scale: 3 | split: '?' | first }}"
+    type="image/png" />
+
+  <link rel="icon"
+    sizes="192x192"
+    href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '192x192', scale: 3 | split: '?' | first }}">
+  <link rel="icon"
+    sizes="128x128"
+    href="{{ 'mike_wrobel_moshikun.png' | file_img_url: '128x128', scale: 3 | split: '?' | first }}">
+
+  <title>
+    {{ page_title }}
+    {% if current_tags %}
+      {% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}
+    {% endif %}
+
+    {% if current_page != 1 %}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {% endif %}
+
+    {% unless page_title contains shop.name %}
+      &ndash; {{ shop.name }}
+    {% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {% include 'social-meta-tags' %}
+
+  {{ 'fonts.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'css_lib_materialize.css' | asset_url | stylesheet_tag }}
+  {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+
+  {% include 'oldIE-js' %}
+
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@10.19.0/dist/lazyload.min.js"></script>
+
+  <!-- Facebook Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1951882285058138');
+
+  fbq('track', 'PageView');
+  fbq('track', 'AddToCart');
+  fbq('track', 'InitiateCheckout');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1951882285058138&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- fbq('track', 'Purchase', { value: 0.00, currency: 'USD' }); -->
+  <!-- DO NOT MODIFY -->
+  <!-- End Facebook Pixel Code -->
+
+  <!-- Hits Analytics tracking code -->
+  {% if shop.customer_accounts_enabled %}
+    {% if customer %}
+      <script type="text/javascript">
+          function hitsReady() {
+              if (typeof hits != 'undefined')
+                  hits('user','identify', {'id' : '{{ customer.id }}'});
+              else
+                  setTimeout(hitsReady,500);
+          }
+          window.attachEvent ? window.attachEvent('onload', hitsReady) : window.addEventListener('load', hitsReady, false);
+      </script>
+    {% endif %}
+  {% endif %}
+  <!-- end of Hits Analytics code -->
+</head>
+
+<body
+  id="{{ page_title | handle }}" oncontextmenu="return false;" class="white">
+
+  {% include 'navigation-header' %}
+
+  <div id="fullpage-container" class="container {% if template == 'collection' %}little-negative-margin-top{% endif %}">
+    <div class="row">
+      {% include 'desktop-nav' %}
+
+      <div class="col s12 m12 l9 content-block {% if template == 'index' %}little-margin-top{% endif %}">
+        {{ content_for_layout }}
+      </div>
+    </div>
+  </div>
+
+  <ul id="cart" class="side-nav">
+    {% include "mobile-cart" %}
+  </ul>
+
+  <a id="back-to-top" href="#" class="btn-floating">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448">
+      <path d="m224 0c-123.710938 0-224 100.289062-224 224s100.289062 224 224 224 224-100.289062 224-224c-.140625-123.652344-100.347656-223.859375-224-224zm141.425781 293.425781c-3.125 3.121094-8.191406 3.121094-11.3125 0l-130.113281-130.113281-130.113281 130.113281c-2.007813 2.078125-4.980469 2.910157-7.777344 2.179688s-4.984375-2.917969-5.714844-5.714844.101563-5.769531 2.179688-7.777344l135.769531-135.769531c3.125-3.121094 8.1875-3.121094 11.3125 0l135.769531 135.769531c3.121094 3.121094 3.121094 8.1875 0 11.3125zm0 0"/>
+    </svg>
+  </a>
+
+  {% include 'footer' %}
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  {{ 'js_lib_materialize.js' | asset_url | script_tag }}
+
+  {% include 'theme-scripts' %}
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-72207183-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>

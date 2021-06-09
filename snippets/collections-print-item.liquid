@@ -1,0 +1,117 @@
+{% comment %} Set Up Drawer Image {% endcomment %}
+{% assign product_images = product.images | reverse %}
+{% if product.tags contains 'landscape' %}
+  {% assign product_main_image = product_images[1] %}
+{% elsif product.type == 'Cap' %}
+  {% assign product_main_image = product_images[5] %}
+{% else %}
+  {% assign product_main_image = product_images.first %}
+{% endif %}
+
+{% comment %} Set Up Grid Image {% endcomment %}
+{% if product.tags contains 'Iconic Toys' or product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}
+  {% assign item_main_image = product_images[1] %}
+{% elsif product.type == 'Cap' %}
+  {% assign item_main_image = product_images[6] %}
+{% else %}
+  {% assign item_main_image = product_images.first %}
+{% endif %}
+
+{% comment %} Set Up Drawer Dimension {% endcomment %}
+{% if product.type == 'Moshi Kun Cards' or product.type == 'Goodies' %}
+  {% assign drawer_class = 'moshikun-goodies-card-item' %}
+{% elsif product.type == 'Art Print' %}
+  {% if product.tags contains 'landscape' %}
+    {% assign drawer_class = 'product-item-landscape' %}
+  {% else %}
+    {% assign drawer_class = 'product-item' %}
+  {% endif %}
+{% else %}
+  {% assign drawer_class = 'product-item' %}
+{% endif %}
+
+{% comment %} Set Up Drawer Content {% endcomment %}
+{% case product.type %}
+{% when 'Art Print' %}
+  {% assign drawer_content = "product-art-print" %}
+{% when 'Moshi Kun Cards' %}
+  {% assign drawer_content = "product-moshikun-card" %}
+{% when 'Goodies' %}
+  {% assign drawer_content = "product-goodies" %}
+{% else %}
+  {% assign drawer_content = "product-art-print" %}
+{% endcase %}
+
+{% comment %} Set Up landscape Prints {% endcomment %}
+{% assign landscape = false %}
+{% if product.tags contains 'landscape' %}
+  {% assign landscape = true %}
+{% endif %}
+
+<div
+  class="col s6 m4 l4 product-block-container collection-item-product-{{ product.id }}"
+  data-loop-index="{{ forloop.index }}">
+  <a
+    id="collection-item-trigger-{{ product.id }}"
+    href="{{ product.url | within: collection }}"
+    data-activates="product-drawer-{{ product.id }}"
+    class="product-block {{ drawer_class }}"
+    data-variant-id="{{ product.variants.first.id }}"
+    data-variant-last-id="{% if product.variants.size > 1 %}{{ product.variants.last.id }}{% endif %}"
+    data-image-src="{{ product_main_image | product_img_url: 'master' | split: '?' | first }}"
+    data-title="{{ product.title }}"
+    data-product-id="{{ product.id }}"
+    data-limited="{% if product.variants.first.option1 contains 'signed' %}1{% endif %}"
+    data-vertigo="{% if product.tags contains 'vertigo' %}1{% endif %}"
+    data-iconic-toys="{% if product.tags contains 'Iconic Toys' %}1{% endif %}"
+    data-subtitle="{{ product.variants.first.option2 | remove: 'medium-' }} - {{ product.variants.first.price | money }}"
+    data-subtitle-last="{% if product.variants.size > 1 %}{{ product.variants.last.option2 | remove: 'large-' }} - {{ product.variants.last.price | money }}{% endif %}"
+    data-batman="{% if product.tags contains 'batman-series' %}1{% endif %}"
+    data-cercei="{% if product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}1{% endif %}">
+
+    <div class="reveal">
+      <img class="lazy"
+        src="{{ item_main_image | product_img_url: '180x', scale: 3 | split: '?' | first }}"
+        sizes="25vw"
+        srcset="{{ item_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ item_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 400w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 800w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 1000w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 1400w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 1800w"
+        data-src="{{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }}"
+        data-sizes="25vw"
+        data-srcset="{{ item_main_image | product_img_url: '100x', scale: 3 | split: '?' | first }} 100w, {{ item_main_image | product_img_url: '200x', scale: 3 | split: '?' | first }} 200w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 400w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 800w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 1000w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 1400w, {{ item_main_image | product_img_url: '261x', scale: 3 | split: '?' | first }} 1800w"
+        alt="{{ item_main_image.alt | escape }}" />
+
+      <div class="hidden hide-on-med-and-down">
+        <div class="caption">
+          <div class="centered">
+            <p>{{ product.title }}</p>
+            <p>-</p>
+            <p>
+              {% if product.variants.size > 1 %}
+                {{ product.variants.first.price | money }} ~ {{ product.variants.last.price | money }}
+              {% else %}
+                {{ product.price | money }}
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <p class="collection-grid-item-product-price hide-on-med-and-up white">
+    {% if product.variants.size == 2 %}
+      {{ product.variants.first.price | money }} ~ {{ product.variants.last.price | money }}
+    {% else %}
+      {{ product.price | money }}
+    {% endif %}
+  </p>
+
+  {% if product.tags contains 'landscape' %}
+    <ul id="product-drawer-{{ product.id }}" class="side-nav landscape-print-drawer">
+      {% include drawer_content with product %}
+    </ul>
+  {% elsif product.type == 'Moshi Kun Cards' or product.type == 'Goodies' %}
+    <ul id="product-drawer-{{ product.id }}" class="side-nav">
+      {% include drawer_content with product %}
+    </ul>
+  {% endif %}
+</div>

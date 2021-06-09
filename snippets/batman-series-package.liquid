@@ -1,0 +1,51 @@
+<div class="divider"></div>
+<br>
+
+<h1 class="product-page-art-print-form-container-title center">
+  Batman Series: Limited Pack
+</h1>
+
+<h5 class="product-page-art-print-form-container-price center">
+  <strong>
+    $125.00 <span style="color: #767676; text-decoration: line-through;">$150.00</span>
+  </strong>
+</h5>
+
+<div class="product-page-art-print-batman-series">
+  <p class="product-page-art-print-batman-series-text">
+    Buy all 3 Batman Series Limited Edition Art Prints.
+    <br>
+    - <a href="/products/mike-wrobel-batman-series-batman-limited-edition" rel="next" class="rose">Batman Limited Edition - 14" x 20"</a>
+    <br>
+    - <a href="/products/mike-wrobel-batman-series-joker-limited-edition" rel="next" class="rose">Joker Limited Edition - 14" x 20"</a>
+    <br>
+    - <a href="/products/mike-wrobel-batman-series-twoface-limited-edition" rel="next" class="rose">Twoface Limited Edition - 14" x 20"</a>
+  </p>
+
+  {% assign batman_print = all_products['mike-wrobel-batman-series-batman-limited-edition'] %}
+  {% assign joker_print = all_products['mike-wrobel-batman-series-joker-limited-edition'] %}
+  {% assign two_face_print = all_products['mike-wrobel-batman-series-twoface-limited-edition'] %}
+
+  <div style="margin: 10px 0;">
+    <a href="/products/mike-wrobel-batman-series-batman-limited-edition" rel="next">
+      <img src="{{ batman_print.images.last.src | product_img_url: 'master' | split: '?' | first }}" alt="{{ batman_print.images.last.alt | escape }}" style="width: 32.7%">
+    </a>
+
+    <a href="/products/mike-wrobel-batman-series-joker-limited-edition" rel="next">
+      <img src="{{ joker_print.images.last.src | product_img_url: 'master' | split: '?' | first }}" alt="{{ joker_print.images.last.alt | escape }}" style="width: 32.7%">
+    </a>
+
+    <a href="/products/mike-wrobel-batman-series-twoface-limited-edition" rel="next">
+      <img src="{{ two_face_print.images.last.src | product_img_url: 'master' | split: '?' | first }}" alt="{{ two_face_print.images.last.alt | escape }}" style="width: 32.7%">
+    </a>
+  </div>
+
+  <a
+    id="addToCart-968421965839"
+    data-product="968421965839"
+    data-handle="mike-wrobel-batman-series-pack-all-3-art-prints"
+    class="product-drawer-summary-form-submit">
+    <span style="margin-right: 10px;">get the pack</span>
+    <span style="margin-left: 10px;">$125.00</span>
+  </a>
+</div>

@@ -1,0 +1,28 @@
+{% if product.type == 'Art Print' %}
+  <a
+    id="addToCart-{{ product.id }}"
+    data-product="{{ product.variants.first.id }}"
+    data-handle="{{ product.handle }}"
+    class="product-drawer-summary-form-submit">
+    <span style="margin-right: 10px;">add to cart</span><span style="margin-left: 10px;">{{ product.variants.first.option2 | remove: 'medium-' | remove: 'large-' | split: 'x' | join: '"x' | append: '"'  }}</span>
+  </a>
+
+  {% if product.variants.size > 1 -%}
+    <a
+      id="addToCart-{{ product.id }}"
+      data-product="{{ product.variants.last.id }}"
+      data-handle="{{ product.handle }}"
+      class="product-drawer-summary-form-submit"
+      style="margin-top: 8px;">
+      <span style="margin-right: 10px;">add to cart</span><span style="margin-left: 10px;">{{ product.variants.last.option2 | remove: 'medium-' | remove: 'large-' | split: 'x' | join: '"x' | append: '"'  }}</span>
+    </a>
+  {% endif %}
+{% else %}
+  <a
+    id="addToCart-{{ product.id }}"
+    data-product="{{ product.variants.first.id }}"
+    data-handle="{{ product.handle }}"
+    class="product-drawer-summary-form-submit">
+    add to cart
+  </a>
+{% endif %}

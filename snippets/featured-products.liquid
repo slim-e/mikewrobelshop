@@ -1,0 +1,102 @@
+<!-- FEATURED PRODUCTS -->
+
+{% assign featured_products = collections['mike-wrobel-featured-products'].products %}
+
+{% for product in featured_products | limit: 18 %}
+  {% assign landscape = false %}
+
+  {% if product.type == 'Moshi Kun Cards' or product.type == 'Goodies' %}
+    {% assign drawer_class = 'home-grid-moshikun-goodies-block' %}
+  {% elsif product.type == 'Art Print' %}
+    {% if product.tags contains 'landscape' %}
+      {% assign landscape = true %}
+      {% assign drawer_class = 'home-grid-landscape-print-block' %}
+    {% else %}
+      {% assign drawer_class = 'home-grid-item-block' %}
+    {% endif %}
+  {% else %}
+    {% assign drawer_class = 'home-grid-item-clothing-block' %}
+  {% endif %}
+
+  {% assign rowindex = forloop.index | modulo: 3 %}
+
+  {% if rowindex == 1 %}
+    <div class="row home-grid">
+  {% endif %}
+
+  <div id="home-page-product-item-{{ forloop.index }}" class="col s6 m4 l4 home-grid-item">
+    {% if product.type == 'Art Print' %}
+      {% assign product_images = product.images | reverse %}
+
+      {% assign thumb_image = product_images[1] %}
+      {% assign product_main_image = product_images.first %}
+
+      {% if product.tags contains 'Iconic Toys' or product.tags contains 'kylo ren' %}
+        {% assign thumb_image = product_images[2] %}
+      {% endif %}
+
+      <a
+        id="home-grid-item-trigger-{{ product.id }}"
+        href="{{ product.url }}"
+        data-activates="product-drawer-{{ product.id }}"
+        class="{{ drawer_class }} {% unless landscape %}home-grid-product-art-print{% endunless %}"
+        data-variant-id="{{ product.variants.first.id }}"
+        data-variant-last-id="{% if product.variants.size > 1 %}{{ product.variants.last.id }}{% endif %}"
+        data-image-src="{{ product_main_image | img_url: 'master', scale: 3 | split: '?' | first }}"
+        data-title="{{ product.title }}"
+        data-product-id="{{ product.id }}"
+        data-vertigo="{% if product.tags contains 'vertigo' %}1{% endif %}"
+        data-limited="{% if product.variants.first.option1 contains 'signed' %}1{% endif %}"
+        data-iconic-toys="{% if product.tags contains 'Iconic Toys' %}1{% endif %}"
+        data-subtitle="{{ product.variants.first.option2 | remove: 'medium-' }} - {{ product.first_available_variant.price | money }}"
+        data-subtitle-last="{% if product.variants.size > 1 %}{{ product.variants.last.option2 | remove: 'large-' }} - {{ product.variants.last.price | money }}{% endif %}"
+        data-batman="{% if product.tags contains 'batman-series' %}1{% endif %}"
+        data-cercei="{% if product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}1{% endif %}">
+        <div
+          class="reveal home-grid-item-reveal lazy"
+          style="background-image: url('{{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }}');"
+          data-bg="url({{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }})"
+          >
+          <div class="hidden home-grid-item-reveal-hidden hide-on-small-only">
+            <div class="caption">
+              <div class="centered">
+                <p>{{ product.title }}</p>
+                <hr class="hr--small">
+                <p>{{ product.price | money }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    {% else %}
+      {% assign thumb_image = product.images.last %}
+
+      {% if product.type == 'Moshi Kun Cards' or product.type == 'Cap' %}
+        {% assign thumb_image = product.images.first %}
+      {% endif %}
+
+      <a
+        href="{{ product.url }}"
+        data-activates="product-drawer-{{ product.id }}"
+        class="{{ drawer_class }}">
+        <div
+          class="reveal home-grid-item-reveal lazy"
+          style="background-image: url('{{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }}');">
+          <div class="hidden home-grid-item-reveal-hidden">
+            <div class="caption">
+              <div class="centered">
+                <p>{{ product.title }}</p>
+                <hr class="hr--small">
+                <p>{{ product.price | money }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    {% endif %}
+  </div>
+
+  {% if rowindex == 0 %}
+    </div>
+  {% endif %}
+{% endfor %}
