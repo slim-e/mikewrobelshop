@@ -1,13 +1,10 @@
 {% assign lone = true %}
 {% if collection.handle == 'mike-wrobel-art-prints' or collection.handle == 'mike-wrobel-8090s-game-of-thrones-era-characters' or collection.handle contains '-goodies' or collection.handle contains '-limited' %}
   {% assign item = 'collections-print-item' %}
-  {% include "dynamic-product-art-print" %}
 {% elsif collection.handle == 'mike-wrobel-moshi-kun' %}
   {% assign item = 'collections-print-item' %}
-  {% include "dynamic-product-moshikun-card" %}
 {% elsif collection.handle contains '-tshirts' %}
   {% assign item = 'collections-tshirt-item' %}
-  {% include "dynamic-product-tshirt" %}
 {% elsif collection.handle contains '-men-sweatshirts' %}
   {% assign item = 'collections-sweatshirt-item' %}
 {% elsif collection.handle contains 'sleeves' %}
@@ -32,7 +29,7 @@
 
       {% for product in collection.products %}
         {% assign rowindex = forloop.index | modulo: 3 %}
-      
+
       	{% unless (collection.handle == 'mike-wrobel-art-prints' and product.handle == 'original-custom-art-cap-01') or product.handle == 'mike-wrobel-batman-series-pack-all-3-art-prints' %}
         	<div
           	  id="product-{{ forloop.index | plus:paginate.current_offset }}"
