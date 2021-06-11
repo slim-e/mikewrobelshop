@@ -5,30 +5,11 @@
         <div class="footer-help">
           <p class="center">Navigation And Collections</p>
           <ul>
-            <li>
-              <a href="/collections/mike-wrobel-art-prints" rel="next" title="Art Prints Collection">Art Prints</a>
-            </li>
-            <li>
-              <a href="/collections/mike-wrobel-men-tshirts" rel="next" title="Men Tees Collection">Men Tees</a>
-            </li>
-            <li class="desktop-nav-sub-category">
-              <a href="/collections/mike-wrobel-women-tshirts" rel="next" title="Women Tees Collection">Women Tees</a>
-            </li>
-            <li>
-              <a href="/collections/mike-wrobel-goodies" rel="next" title="Goodies Collection">
-                Goodies
-              </a>
-            </li>
-            <li>
-              <a href="/collections/mike-wrobel-8090s-game-of-thrones-era-characters" rel="next" title="80/90s Thrones Collection">
-                80/90s Thrones
-              </a>
-            </li>
-            <li>
-              <a href="/collections/mike-wrobel-limited" rel="next" title="Limited Collection">
-                Limited
-              </a>
-            </li>
+            {% for link in linklists.footer-navigation-and-collection.links %}
+              <li>
+                <a href="{{ link.url }}" rel="next" title="{{ link.title }} Collection">{{ link.title }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
@@ -37,24 +18,15 @@
         <div class="footer-help">
           <p class="center">Help And Info</p>
           <ul>
-            <li><a rel="author" href="/pages/mike-wrobel-about">About</a></li>
-            <li><a rel="author" href="/pages/faqs">FAQ's</a></li>
-            <li>
-              <a href="mailto:mike@moshistudio.com?subject=Contact+from+Moshikun+Shop">Contact</a>
-            </li>
+            {% for link in linklists.footer.links %}
+              <li>
+                <a href="{{ link.url }}" rel="help" title="{{ link.title }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
             <li>
               <a href="mailto:support@printaura.com?subject=Reclamation+for+an+order+from+Moshikun+Shop" rel="nofollow">
                 Reclamations for <strong>tees</strong>
               </a>
-            </li>
-            <li>
-              <a href="/pages/mike-wrobel-moshikun-shop-privacy-policy" rel="help" title="Privacy Policy">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="/pages/mike-wrobel-moshikun-shop-refund-policy" rel="help" title="Refund Policy">Refund Policy</a>
-            </li>
-            <li>
-              <a href="/pages/mike-wrobel-moshikun-shop-terms-of-service" rel="help" title="Terms of Service">Terms of Service</a>
             </li>
           </ul>
         </div>
@@ -63,7 +35,6 @@
       <div class="col s12 m4 l3">
         <div class="footer-follow-me center">
           <p>Connect With Me</p>
-
           {% include 'footer-social-links' %}
         </div>
 
@@ -71,10 +42,9 @@
 
         <div class="footer-newsletter center">
           <p>Subscribe To My Newsletter</p>
-
           <form id="footer-newsletter-form" action="">
             <input id="email" type="email" value="" placeholder="Your email" name="EMAIL" aria-label="Your email" autocorrect="off" autocapitalize="off" class="col s12">
-            <input id="subscribe" class="base-btn" type="submit" name="subscribe" value="subscribe now !">
+            <input id="subscribe" class="base-btn white-text" type="submit" name="subscribe" value="subscribe now !">
           </form>
         </div>
       </div>

@@ -41,45 +41,31 @@
 
     <br>
 
-    <li>
-      <a href="/" rel="next" title="Home Page">Home</a>
-    </li>
-    <li>
-      <a href="/collections/mike-wrobel-art-prints">Art Prints</a>
-    </li>
-    <li>
-      <a href="/collections/mike-wrobel-8090s-game-of-thrones-era-characters">
-        80/90s Thrones
-      </a>
-    </li>
-    <li class="desktop-nav-trigger">
-      <a class='desktop-nav-dropdown' href='#'>
-        Clothing
-        <span class="right desktop-nav-dropdown-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-          </svg>
-        </span>
-      </a>
-    </li>
-    <div class="desktop-nav-panel">
-      <li class="desktop-nav-sub-category">
-        <a href="/collections/mike-wrobel-men-tshirts">Men Tees</a>
-      </li>
-      <li class="desktop-nav-sub-category">
-        <a href="/collections/mike-wrobel-women-tshirts">Women Tees</a>
-      </li>
-    </div>
-    <li>
-      <a href="/collections/mike-wrobel-goodies" rel="next" title="Sticker and Pins Collection">
-        Goodies
-      </a>
-    </li>
-    <li>
-      <a href="/collections/mike-wrobel-limited" rel="next" title="Limited Collection">
-        Limited
-      </a>
-    </li>
+    {% for link in linklists.main-menu.links %}
+      {% if link.links.size > 0 %}
+        <li class="desktop-nav-trigger">
+          <a class='desktop-nav-dropdown' href='#'>
+            {{ link.title }}
+            <span class="right desktop-nav-dropdown-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+              </svg>
+            </span>
+          </a>
+        </li>
+        <div class="desktop-nav-panel">
+          {% for sub_link in link.links %}
+            <li class="desktop-nav-sub-category">
+              <a href="{{ sub_link.url }}" rel="next" title="{{ sub_link.title }}">{{ sub_link.title }}</a>
+            </li>
+          {% endfor %}
+        </div>
+      {% else %}
+        <li>
+          <a href="{{ link.url }}" rel="next" title="{{ link.title }}">{{ link.title }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
   </ul>
 
   {% include 'footer-social-links' %}

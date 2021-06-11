@@ -20,21 +20,11 @@
         </li>
 
         <div class="thrones-panel">
-          <li class="thrones-list-item">
-            <a rel="next" title="80S/90s Game Of Thrones Art Prints Collection" href="/collections/mike-wrobel-8090s-game-of-thrones-era-characters">
-              Art Prints
-            </a>
-          </li>
-          <li class="thrones-list-item">
-            <a rel="next" title="80S/90s Game Of Thrones Men Tees Collection" href="/collections/8090s-thrones-men-tshirts">
-              Men Tees
-            </a>
-          </li>
-          <li class="thrones-list-item">
-            <a rel="next" title="80S/90s Game Of Thrones Women Tees Collection" href="/collections/8090s-thrones-women-tshirts">
-              Women Tees
-            </a>
-          </li>
+          {% for link in linklists.90s-thrones-menu.links %}
+            <li class="thrones-list-item">
+              <a href="{{ link.url }}" rel="next" title="90s Thrones {{ link.title }} Collection">{{ link.title }}</a>
+            </li>
+          {% endfor %}
         </div>
       </ul>
     </div>
