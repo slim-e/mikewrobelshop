@@ -25,7 +25,7 @@
   <meta name="p:domain_verify" content="9b02480d49e7abef4f933970222d6a56"/>
 
   {% if template contains 'collection' %}
-    <meta name="keywords" content="mike wrobel, art print, graphic design, manga, animation, fan art, game of thrones, design, art, artist, vector illustration, got, gta, pop culture, pop art, movies, movies posters, tv shows, {{ product.title }}">
+    <meta name="keywords" content="mike wrobel, art print, graphic design, manga, animation, fan art, game of thrones, design, art, artist, vector illustration, got, gta, pop culture, pop art, movies, movies posters, tv shows, {{ collection.title }}">
   {% elsif template contains 'product' %}
     <meta name="keywords" content="mike wrobel, art print, graphic design, manga, animation, fan art, game of thrones, design, art, artist, vector illustration, got, gta, pop culture, pop art, movies, movies posters, tv shows, {{ product.title }}, {{ product.tags | join: ', ' }}">
   {% else  %}
