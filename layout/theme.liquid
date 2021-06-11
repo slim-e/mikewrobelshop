@@ -110,7 +110,7 @@
 
   <div id="fullpage-container" class="container {% if request.page_type == 'collection' or request.page_type == 'index' %}full-width-container{% elsif request.page_type == 'product' or request.page_type == 'list-collections' %}product-page-container{% endif %}">
     <div class="row">
-      {% include 'desktop-nav' %}
+      {% include 'navigation-desktop' %}
 
       <div class="col s12 m12 l9 content-block">
         {{ content_for_layout }}
