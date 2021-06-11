@@ -1,12 +1,5 @@
 {% assign base_handle = product.handle | remove: '-man-tshirt' | remove: '-woman-tshirt' %}
 {% assign current_handle = product.handle %}
-
-{% assign has_print = false %}
-{% if product.type == 'Man Tshirt' or product.type == 'Woman Tshirt' %}
-  <!-- TODO: add other condition -->
-  {% assign has_print = true %}
-{% endif %}
-
 {% assign product_images = product.images %}
 {% assign product_main_image = product_images.first %}
 {% assign thumbs_count = 5 %}
@@ -157,18 +150,5 @@
           </table>
       {% endcase %}
     </p>
-
-    {% if has_print %}
-      <br>
-      <div class="product-page-art-print-related-designs-container">
-        <strong class="title">This design is also available as :</strong>
-
-        <div class="row single-row">
-          <div class="col s12 button-container-left">
-            <a href="/products/{{ base_handle }}" rel="next" class="product-drawer-summary-form-submit">art print</a>
-          </div>
-        </div>
-      </div>
-    {% endif %}
   </div>
 </div>
