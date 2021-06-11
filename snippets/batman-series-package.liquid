@@ -22,27 +22,11 @@
     - <a href="/products/mike-wrobel-batman-series-twoface-limited-edition" rel="next" class="rose">Twoface Limited Edition - 14" x 20"</a>
   </p>
 
-  {% assign batman_print = all_products['mike-wrobel-batman-series-batman-limited-edition'] %}
-  {% assign joker_print = all_products['mike-wrobel-batman-series-joker-limited-edition'] %}
-  {% assign two_face_print = all_products['mike-wrobel-batman-series-twoface-limited-edition'] %}
+  {% assign batman_series = all_products['mike-wrobel-batman-series-pack-all-3-art-prints'] %}
 
-  <div style="margin: 10px 0;">
-    <a href="/products/mike-wrobel-batman-series-batman-limited-edition" rel="next">
-      <img src="{{ batman_print.images.last.src | product_img_url: 'master' | split: '?' | first }}" alt="{{ batman_print.images.last.alt | escape }}" style="width: 32.7%">
-    </a>
+  <img class="product-page-art-print-batman-series-img" src="{{ batman_series.images.first.src | product_img_url: 'master' | split: '?' | first }}" alt="Batman Series Mike Wrobel Shop">
 
-    <a href="/products/mike-wrobel-batman-series-joker-limited-edition" rel="next">
-      <img src="{{ joker_print.images.last.src | product_img_url: 'master' | split: '?' | first }}" alt="{{ joker_print.images.last.alt | escape }}" style="width: 32.7%">
-    </a>
-
-    <a href="/products/mike-wrobel-batman-series-twoface-limited-edition" rel="next">
-      <img src="{{ two_face_print.images.last.src | product_img_url: 'master' | split: '?' | first }}" alt="{{ two_face_print.images.last.alt | escape }}" style="width: 32.7%">
-    </a>
-  </div>
-
-  <a
-    id="addToCart-968421965839"
-    data-product="968421965839"
+  <a id="addToCart-968421965839" data-product="968421965839"
     data-handle="mike-wrobel-batman-series-pack-all-3-art-prints"
     class="product-drawer-summary-form-submit">
     <span style="margin-right: 10px;">get the pack</span>
