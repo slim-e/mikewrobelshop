@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col s12 m4 l3 offset-l3">
         <div class="footer-help">
+          <img src="{{ 'mike-wrobel-shop-footer-signature.png' | file_img_url: 'master' | split: '?' | first }}" alt="Mike Wrobel Signature" class="hide-on-med-and-up footer-signature">
           <p class="center">Navigation And Collections</p>
           <ul>
             {% for link in linklists.footer-navigation-and-collection.links %}
