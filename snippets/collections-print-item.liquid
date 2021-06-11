@@ -17,58 +17,12 @@
   {% assign item_main_image = product_images.first %}
 {% endif %}
 
-{% comment %} Set Up Drawer Dimension {% endcomment %}
-{% if product.type == 'Moshi Kun Cards' or product.type == 'Goodies' %}
-  {% assign drawer_class = 'moshikun-goodies-card-item' %}
-{% elsif product.type == 'Art Print' %}
-  {% if product.tags contains 'landscape' %}
-    {% assign drawer_class = 'product-item-landscape' %}
-  {% else %}
-    {% assign drawer_class = 'product-item' %}
-  {% endif %}
-{% else %}
-  {% assign drawer_class = 'product-item' %}
-{% endif %}
-
-{% comment %} Set Up Drawer Content {% endcomment %}
-{% case product.type %}
-{% when 'Art Print' %}
-  {% assign drawer_content = "product-art-print" %}
-{% when 'Moshi Kun Cards' %}
-  {% assign drawer_content = "product-moshikun-card" %}
-{% when 'Goodies' %}
-  {% assign drawer_content = "product-goodies" %}
-{% else %}
-  {% assign drawer_content = "product-art-print" %}
-{% endcase %}
-
-{% comment %} Set Up landscape Prints {% endcomment %}
-{% assign landscape = false %}
-{% if product.tags contains 'landscape' %}
-  {% assign landscape = true %}
-{% endif %}
-
 <div
   class="col s6 m4 l4 product-block-container collection-item-product-{{ product.id }}"
   data-loop-index="{{ forloop.index }}">
-  <a
-    id="collection-item-trigger-{{ product.id }}"
-    href="{{ product.url | within: collection }}"
-    data-activates="product-drawer-{{ product.id }}"
-    class="product-block {{ drawer_class }}"
-    data-variant-id="{{ product.variants.first.id }}"
-    data-variant-last-id="{% if product.variants.size > 1 %}{{ product.variants.last.id }}{% endif %}"
-    data-image-src="{{ product_main_image | product_img_url: 'master' | split: '?' | first }}"
-    data-title="{{ product.title }}"
-    data-product-id="{{ product.id }}"
-    data-limited="{% if product.variants.first.option1 contains 'signed' %}1{% endif %}"
-    data-vertigo="{% if product.tags contains 'vertigo' %}1{% endif %}"
-    data-iconic-toys="{% if product.tags contains 'Iconic Toys' %}1{% endif %}"
-    data-subtitle="{{ product.variants.first.option2 | remove: 'medium-' }} - {{ product.variants.first.price | money }}"
-    data-subtitle-last="{% if product.variants.size > 1 %}{{ product.variants.last.option2 | remove: 'large-' }} - {{ product.variants.last.price | money }}{% endif %}"
-    data-batman="{% if product.tags contains 'batman-series' %}1{% endif %}"
-    data-cercei="{% if product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}1{% endif %}">
-
+  <a href="{{ product.url | within: collection }}"
+     class="product-block"
+     data-image-src="{{ product_main_image | product_img_url: 'master' | split: '?' | first }}">
     <div class="reveal">
       <img class="lazy"
         src="{{ item_main_image | product_img_url: '180x', scale: 3 | split: '?' | first }}"
@@ -104,14 +58,4 @@
       {{ product.price | money }}
     {% endif %}
   </p>
-
-  {% if product.tags contains 'landscape' %}
-    <ul id="product-drawer-{{ product.id }}" class="side-nav landscape-print-drawer">
-      {% include drawer_content with product %}
-    </ul>
-  {% elsif product.type == 'Moshi Kun Cards' or product.type == 'Goodies' %}
-    <ul id="product-drawer-{{ product.id }}" class="side-nav">
-      {% include drawer_content with product %}
-    </ul>
-  {% endif %}
 </div>
