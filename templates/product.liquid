@@ -1,22 +1,7 @@
-{% case product.type %}
-{% when 'Art Print' %}
-  {% assign product_collection = collections['mike-wrobel-art-prints'] %}
-  {% include 'art-print-product-page' %}
-{% when 'Man Tshirt' %}
-  {% assign product_collection = collections['mike-wrobel-men-tshirts'] %}
-  {% include 'tshirt-product-page' %}
-{% when 'Woman Tshirt' %}
-  {% assign product_collection = collections['mike-wrobel-women-tshirts'] %}
-  {% include 'tshirt-product-page' %}
-{% when 'Moshi Kun Cards' %}
-  {% assign product_collection = collections['mike-wrobel-moshikun-cards'] %}
-  {% include 'art-print-product-page' %}
-{% when 'Goodies' %}
-  {% assign product_collection = collections['mike-wrobel-goodies'] %}
-  {% include 'art-print-product-page' %}
-{% when 'Cap' %}
-  {% assign product_collection = collections['mike-wrobel-goodies'] %}
-  {% include 'cap-product-page' %}
+{% if product.type == 'Man Tshirt' or product.type == 'Woman Tshirt' %}
+  {% include 'product-page-tshirt' %}
+{% elsif product.type == 'Cap' %}
+  {% include 'product-page-cap' %}
 {% else %}
-  {% include "error-404" %}
-{% endcase %}
+  {% include 'product-page-art-print' %}
+{% endif %}

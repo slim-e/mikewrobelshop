@@ -55,62 +55,20 @@
     {% include "clothing-add-to-cart-form" with product %}
 
     <p class="product-page-art-print-form-container-description">
-      {% if product.description != '' and product.description != 'Lorem Ipsum' %}
-        <strong>Product Description :</strong><br>
-        {{ product.description | rstrip }}
-        <br><br>
-      {% endif %}
-
       <strong>Product Details :</strong><br>
       {% case product.type %}
         {% when 'Man Tshirt' %}
-          <strong>Anvil 980</strong> Lightweight Fashion Short Sleeve T-Shirt with TearAway™ Label<br><br>
-
+          <strong>Anvil 980</strong> Lightweight Fashion Short Sleeve T-Shirt with TearAway™ Label
+          <br><br>
           - 100% ring-spun lightweight cotton<br>
           - Pre-shrunk<br>
           - Tubular construction<br>
           - Shoulder-to-shoulder tape<br>
           - Seamless collar<br>
-          - Double-needle sleeve and bottom hem<br><br>
-
-          <br><br>
-          <strong>Size Chart :</strong><br>
-          <table class="centered bordered product-page-art-print-form-container-description-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>S</th>
-                <th>M</th>
-                <th>L</th>
-                <th>XL</th>
-                <th>2XL</th>
-                <th>3XL</th>
-              </tr>
-            </thead>
-            <tbody>
-	          <tr>
-	            <th>Length (inches)</th>
-            	<td>28</td>
-        	    <td>29</td>
-    	        <td>30</td>
-	            <td>31</td>
-        	    <td>32</td>
-    	        <td>33</td>
-	          </tr>
-        	  <tr>
-    	        <th>Width (inches)</th>
-	            <td>18</td>
-	            <td>20</td>
-	            <td>22</td>
-	            <td>24</td>
-            	<td>26</td>
-        	    <td>28</td>
-    	      </tr>
-	        </tbody>
-          </table>
+          - Double-needle sleeve and bottom hem
         {% when 'Woman Tshirt' %}
-          <strong>Anvil 880</strong> Ladies Ringspun Fashion Fit T-Shirt with TearAway™ Label<br><br>
-
+          <strong>Anvil 880</strong> Ladies Ringspun Fashion Fit T-Shirt with TearAway™ Label
+          <br><br>
           - 4.5 oz., 100% combed ringspun cotton, 30 singles<br>
           - Heather Grey is 90/10 cotton/polyester<br>
           - Classic semi-contoured silhouette with side seam<br>
@@ -118,37 +76,74 @@
           - Seamed collarette<br>
           - Double-needle stitched sleeves and bottom hem<br>
           - Tear away label
-
-          <br><br>
-          <strong>Size Chart :</strong><br>
-          <table class="centered bordered product-page-art-print-form-container-description-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>S</th>
-                <th>M</th>
-                <th>L</th>
-                <th>XL</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Width (inches)</th>
-                <td>17 ¼</td>
-                <td>19 ¼</td>
-                <td>21 ¼</td>
-                <td>23 ¼</td>
-              </tr>
-              <tr>
-                <th>Height (inches)</th>
-                <td>25 ½</td>
-                <td>26</td>
-                <td>27</td>
-                <td>28</td>
-              </tr>
-            </tbody>
-          </table>
       {% endcase %}
+      <br><br>
+      <strong>Size Chart :</strong>
     </p>
+
+    {% case product.type %}
+      {% when 'Man Tshirt' %}
+        <table class="centered bordered product-page-art-print-form-container-description-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>S</th>
+              <th>M</th>
+              <th>L</th>
+              <th>XL</th>
+              <th>2XL</th>
+              <th>3XL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Length (inches)</th>
+              <td>28</td>
+              <td>29</td>
+              <td>30</td>
+              <td>31</td>
+              <td>32</td>
+              <td>33</td>
+            </tr>
+            <tr>
+              <th>Width (inches)</th>
+              <td>18</td>
+              <td>20</td>
+              <td>22</td>
+              <td>24</td>
+              <td>26</td>
+              <td>28</td>
+            </tr>
+          </tbody>
+        </table>
+      {% when 'Woman Tshirt' %}
+        <table class="centered bordered product-page-art-print-form-container-description-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>S</th>
+              <th>M</th>
+              <th>L</th>
+              <th>XL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Width (inches)</th>
+              <td>17 ¼</td>
+              <td>19 ¼</td>
+              <td>21 ¼</td>
+              <td>23 ¼</td>
+            </tr>
+            <tr>
+              <th>Height (inches)</th>
+              <td>25 ½</td>
+              <td>26</td>
+              <td>27</td>
+              <td>28</td>
+            </tr>
+          </tbody>
+        </table>
+    {% endcase %}
   </div>
 </div>
