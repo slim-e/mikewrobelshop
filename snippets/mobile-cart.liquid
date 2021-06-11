@@ -4,7 +4,7 @@
       <div
         data-cart-view="data-cart-view"
         rv-show="cart.item_count | gt 0">
-        <h4 class="white-text big-title mobile-cart-title">{{ 'cart.general.title' | t }}</h4>
+        <h4 class="big-title mobile-cart-title">{{ 'cart.general.title' | t }}</h4>
 
         <ul class="cart-container-form-list">
           <li class="item" rv-each-item="cart.items">
@@ -41,12 +41,7 @@
 
           <div class="cart-container-form-checkout">
             <span class="total" rv-html="cart.total_price | money"></span>
-
-            <input
-              type="submit"
-              name="checkout"
-              class="submit"
-              value="{{ 'cart.general.checkout' | t }}">
+            <input type="submit" name="checkout" class="submit" value="{{ 'cart.general.checkout' | t }}">
 
             {% if additional_checkout_buttons %}
               <style media="screen">
@@ -100,7 +95,7 @@
       </div>
 
       <div data-cart-view="data-cart-view" rv-show="cart.item_count | lt 1">
-        <h4 class="big-title white-text">{{ 'cart.general.title' | t }}</h4>
+        <h4 class="big-title">{{ 'cart.general.title' | t }}</h4>
 
         <p>Your cart is empty... :(</p>
       </div>
