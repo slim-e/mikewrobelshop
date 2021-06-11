@@ -141,24 +141,21 @@
   <!-- end of Hits Analytics code -->
 </head>
 
-<body
-  id="{{ page_title | handle }}" oncontextmenu="return false;" class="white">
+<body id="{{ page_title | handle }}" oncontextmenu="return false;" class="white">
 
-  {% include 'navigation-header' %}
+  {% include "navigation-header" %}
 
-  <div id="fullpage-container" class="container {% if template == 'collection' %}little-negative-margin-top{% endif %}">
+  <div id="fullpage-container" class="container {% if request.page_type == 'collection' or request.page_type == 'index' %}full-width-container{% elsif request.page_type == 'product' or request.page_type == 'list-collections' %}product-page-container{% endif %}">
     <div class="row">
       {% include 'desktop-nav' %}
 
-      <div class="col s12 m12 l9 content-block {% if template == 'index' %}little-margin-top{% endif %}">
+      <div class="col s12 m12 l9 content-block">
         {{ content_for_layout }}
       </div>
     </div>
   </div>
 
-  <ul id="cart" class="side-nav">
-    {% include "mobile-cart" %}
-  </ul>
+  {% include "mobile-cart" %}
 
   <a id="back-to-top" href="#" class="btn-floating">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448">
