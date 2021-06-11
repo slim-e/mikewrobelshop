@@ -46,18 +46,18 @@
     	<h5 class="product-page-art-print-form-container-price center">
       		<strong>{{ product.price | money }}</strong>
     	</h5>
-    
+
 	    {% include "add-to-cart-button" with product %}
 	    {% include "product-drawer-add-to-cart-feedbacks" %}
 	    {% include 'product-page-delivery-warning' %}
     {% else %}
     	<h5 class="product-page-art-print-form-container-price center">
-      		<strong>Sold Out</strong>
+      		<strong>Sold Out</strong><strike style="margin-left: 10px; color: #767676;">{{ product.price | money }}</strike>
     	</h5>
 	{% endif %}
-    
+
     {% if product.description != '' and product.description != 'Lorem Ipsum' %}
-	    <p class="product-page-art-print-form-container-description">  
+	    <p class="product-page-art-print-form-container-description">
     	    {{ product.description | rstrip }}
 	    </p>
     {% endif %}
