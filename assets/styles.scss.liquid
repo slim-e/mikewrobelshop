@@ -92,11 +92,24 @@ html {
     padding: 35px 0 0;
   }
 }
+@media only screen and (max-width: 769px) {
+  #fullpage-container, #fullpage-container.collection-width-container {
+    width: 95%;
+    padding: 0;
+  }
+  #fullpage-container.full-width-container {
+    width: 100%;
+  }
+  #fullpage-container.product-page-container {
+    width: 90%;
+    margin-top: 25px;
+  }
+}
 @media screen and (max-width: 480px) {
   #fullpage-container {
     background-color: #ffffff;
   }
-  #fullpage-container.full-width-container {
+  #fullpage-container.full-width-container, #fullpage-container.collection-width-container {
     width: 100%;
   }
   #fullpage-container.product-page-container {
@@ -116,8 +129,7 @@ html {
     width: 100% !important;
   }
 }
-.backdrop,
-.material-tooltip {
+.backdrop, .material-tooltip {
   background-color: #f50b8f !important;
 }
 .content-block {
@@ -311,7 +323,7 @@ strong {
 .navbar-fixed {
   margin-bottom: 35px;
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 769px) {
   .navbar-fixed {
     height: 48px;
     margin-bottom: 0;
@@ -329,7 +341,7 @@ strong {
   margin: 3px 0;
 }
 .desktop-header .tablet-menu-trigger svg path {
-  fill: #ffffff;
+  fill: #727272;
 }
 nav {
   height: 48px !important;
@@ -849,8 +861,24 @@ a#instagram:hover svg path {
   vertical-align: middle;
   margin: 20px;
 }
+#tablet-menu {
+  padding-top: 20px;
+}
 #tablet-menu a {
-  color: #ffffff;
+  color: #727272 !important;
+  display: block;
+  font-size: 14px;
+  height: 34px;
+  line-height: 14px;
+  padding: 10px 30px;
+  text-align: left;
+}
+#tablet-menu li.desktop-nav-sub-category {
+  padding-left: 30px;
+  width: 370px;
+}
+#tablet-menu span.desktop-nav-dropdown-icon {
+  margin-top: -5px;
 }
 .mobile-menu-list-item {
   height: auto;
@@ -859,6 +887,7 @@ a#instagram:hover svg path {
   #mobile-menu {
     background-color: #000000;
     padding: 30% 0 0;
+    width: 100% !important;
   }
   #mobile-menu .mobile-menu-list-item-link {
     color: #e9fe6e;
@@ -911,7 +940,7 @@ footer.page-footer #subscribe:hover {
   border-color: #f50b8f !important;
   color: #FFFFFF !important;
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 769px) {
   footer.page-footer {
     margin-top: 0 !important;
     padding: 35px 0 70px;
@@ -2054,22 +2083,30 @@ footer p {
   padding-left: 0.75rem;
   padding-right: 0;
 }
-.home-grid-item-reveal {
-  height: 100%;
-  background-size: 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  transition: all 0.5s;
-  -o-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-}
+
 @media only screen and (min-width: 979px) {
+  .home-grid-item-reveal {
+    height: 100%;
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+  }
+
   .home-grid-item-reveal:hover {
     background-size: 130%;
   }
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 769px) {
+  .home-grid-item-reveal {
+    height: 100%;
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
   .home-grid {
     margin: 0 !important;
   }
@@ -2080,23 +2117,6 @@ footer p {
     -webkit-transition: 0.4s;
     -o-transition: 0.4s;
     transition: 0.4s;
-  }
-  .home-grid-category-panel {
-    padding: 0 1px;
-    background-color: #ffffff;
-    max-height: 0;
-    overflow: hidden;
-    -webkit-transition: max-height 0.2s ease-out;
-    -o-transition: max-height 0.2s ease-out;
-    transition: max-height 0.2s ease-out;
-  }
-  .home-grid-category-panel-item a {
-    display: block;
-    text-transform: uppercase;
-    font-size: 14px;
-    line-height: 14px;
-    color: #767676;
-    padding: 10px 0;
   }
   .home-grid-category-item {
     display: table;
@@ -2778,13 +2798,13 @@ select {
   background-color: #ffffff;
   color: #f50b8f;
 }
-.product-page-art-print-batman-series {
-  margin-bottom: 20px;
+.product-page-art-print-batman-series-links {
+  margin: 10px 0;
 }
-@media only screen and (max-width: 480px) {
-  .product-page-art-print-batman-series {
-    margin-bottom: 30px;
-  }
+.product-page-art-print-batman-series-img {
+  width: 100%;
+  margin: 10px 0;
+  max-height: 300px;
 }
 .product-page-art-print-batman-series-text {
   margin: 0 0 5px;

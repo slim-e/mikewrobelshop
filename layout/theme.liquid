@@ -108,7 +108,7 @@
 <body id="{{ page_title | handle }}" oncontextmenu="return false;" class="white">
   {% include "navigation-header" %}
 
-  <div id="fullpage-container" class="container {% if request.page_type == 'collection' or request.page_type == 'index' %}full-width-container{% elsif request.page_type == 'product' or request.page_type == 'list-collections' %}product-page-container{% endif %}">
+  <div id="fullpage-container" class="container {% if request.page_type == 'index' %}full-width-container{% elsif request.page_type == 'collection' %}collection-width-container{% elsif request.page_type == 'product' or request.page_type == 'list-collections' %}product-page-container{% endif %}">
     <div class="row">
       {% include 'navigation-desktop' %}
 
@@ -130,6 +130,5 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   {{ 'js_lib_materialize.js' | asset_url | script_tag }}
-
   {% include 'theme-scripts' %}
 </body>
