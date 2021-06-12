@@ -11,8 +11,8 @@
   <div id="home-page-product-item-{{ forloop.index }}" class="col s6 m4 l4 home-grid-item">
     {% if product.type == 'Art Print' %}
       {% assign product_images = product.images | reverse %}
-      {% assign thumb_image = product_images[1] %}
       {% assign product_main_image = product_images.first %}
+      {% assign thumb_image = product_images[1] %}
       {% if product.tags contains 'Iconic Toys' or product.tags contains 'kylo ren' %}
         {% assign thumb_image = product_images[2] %}
       {% endif %}
@@ -20,11 +20,7 @@
       <a id="home-grid-item-trigger-{{ product.id }}" href="{{ product.url }}"
         class="{% unless landscape %}home-grid-product-art-print{% endunless %}"
         data-image-src="{{ product_main_image | img_url: 'master', scale: 3 | split: '?' | first }}">
-        <div
-          class="reveal home-grid-item-reveal lazy"
-          style="background-image: url('{{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }}');"
-          data-bg="url({{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }})"
-          >
+        <div class="reveal home-grid-item-reveal lazy" style="background-image: url('{{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }}');">
           <div class="hidden home-grid-item-reveal-hidden hide-on-med-and-down">
             <div class="caption">
               <div class="centered">
@@ -45,15 +41,23 @@
       <a href="{{ product.url }}" data-activates="product-drawer-{{ product.id }}">
         <div class="reveal home-grid-item-reveal lazy"
           style="background-image: url('{{ thumb_image | img_url: '260x', scale: 3 | split: '?' | first }}');">
-          <div class="hidden home-grid-item-reveal-hidden">
-            <div class="caption">
-              <div class="centered">
-                <p>{{ product.title }}</p>
-                <hr class="hr--small">
-                <p>{{ product.price | money }}</p>
+          {% unless product.type == 'Cap' and product.variants.first.inventory_quantity == 0 %}
+            <div class="hidden home-grid-item-reveal-hidden hide-on-med-and-down">
+              <div class="caption">
+                <div class="centered">
+                  <p>{{ product.title }}</p>
+                  <hr class="hr--small">
+                  <p>
+                    {% if product.variants.size > 1 %}
+                      {{ product.variants.first.price | money }} ~ {{ product.variants.last.price | money }}
+                    {% else %}
+                      {{ product.price | money }}
+                    {% endif %}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          {% endunless %}
         </div>
       </a>
     {% endif %}
