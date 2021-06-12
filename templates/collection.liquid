@@ -1,40 +1,25 @@
-{% assign lone = true %}
-{% if collection.handle == 'mike-wrobel-art-prints' or collection.handle == 'mike-wrobel-8090s-game-of-thrones-era-characters' or collection.handle contains '-goodies' or collection.handle contains '-limited' %}
-  {% assign item = 'collections-print-item' %}
-{% elsif collection.handle == 'mike-wrobel-moshi-kun' %}
+{% if collection.handle == 'mike-wrobel-art-prints' or collection.handle == 'mike-wrobel-8090s-game-of-thrones-era-characters' or collection.handle contains '-goodies' or collection.handle contains '-limited' or collection.handle == 'mike-wrobel-moshi-kun' %}
   {% assign item = 'collections-print-item' %}
 {% elsif collection.handle contains '-tshirts' %}
   {% assign item = 'collections-tshirt-item' %}
-{% elsif collection.handle contains '-men-sweatshirts' %}
-  {% assign item = 'collections-sweatshirt-item' %}
-{% elsif collection.handle contains 'sleeves' %}
-  {% assign item = 'collections-longsleeve-item' %}
-{% else %}
-  {% assign lone = false %}
 {% endif %}
 
 {% include 'collection-header' %}
 
-{% if lone %}
+{% if request.page_type == 'collection' %}
   {% paginate collection.products by 21 %}
     {% unless collection.products.size > 0 %}
-      <p class="col s12 left">
-        <em>{{ 'collections.general.no_matches' | t }}</em>
-      </p>
+      <p class="col s12 left"><em>{{ 'collections.general.no_matches' | t }}</em></p>
     {% endunless %}
 
-    <div
-      class="collection-grid"
-      {% if collection.products.size < 2 %}style="height: 100vh;"{% endif %}>
-
+    <div class="collection-grid" {% if collection.products.size < 2 %}style="height: 100vh;"{% endif %}>
       {% for product in collection.products %}
         {% assign rowindex = forloop.index | modulo: 3 %}
 
       	{% unless (collection.handle == 'mike-wrobel-art-prints' and product.handle == 'original-custom-art-cap-01') or product.handle == 'mike-wrobel-batman-series-pack-all-3-art-prints' %}
-        	<div
-          	  id="product-{{ forloop.index | plus:paginate.current_offset }}"
-          	  class="collection-grid-product-item collection-index-{{ rowindex }}">
-          		{% include item with product %}
+        	<div id="product-{{ forloop.index | plus:paginate.current_offset }}"
+               class="collection-grid-product-item collection-index-{{ rowindex }}">
+          	{% include item with product %}
         	</div>
         {% endunless %}
       {% endfor %}
