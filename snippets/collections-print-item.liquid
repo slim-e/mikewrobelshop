@@ -1,10 +1,10 @@
 {% assign product_images = product.images | reverse %}
+{% assign item_main_image = product_images.first %}
+
 {% if product.tags contains 'Iconic Toys' or product.handle == 'mike-wrobel-thrones-cersei-limited-edition' %}
   {% assign item_main_image = product_images[1] %}
 {% elsif product.type == 'Cap' %}
   {% assign item_main_image = product_images[6] %}
-{% else %}
-  {% assign item_main_image = product_images.first %}
 {% endif %}
 
 <div class="col s6 m4 l4 product-block-container" data-loop-index="{{ forloop.index }}">

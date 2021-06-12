@@ -1,7 +1,7 @@
-{% if collection.handle == 'mike-wrobel-art-prints' or collection.handle == 'mike-wrobel-8090s-game-of-thrones-era-characters' or collection.handle contains '-goodies' or collection.handle contains '-limited' or collection.handle == 'mike-wrobel-moshi-kun' %}
-  {% assign item = 'collections-print-item' %}
-{% elsif collection.handle contains '-tshirts' %}
+{% if collection.handle contains '-tshirts' %}
   {% assign item = 'collections-tshirt-item' %}
+{% else %}
+  {% assign item = 'collections-print-item' %}
 {% endif %}
 
 {% include 'collection-header' %}
